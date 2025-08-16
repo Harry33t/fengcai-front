@@ -1,0 +1,184 @@
+.menu-management {
+  padding: 16px;
+}
+
+.menu-page {
+  .search-area {
+    margin-bottom: 16px;
+    padding: 16px;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+
+    .el-form {
+      .el-form-item {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .action-buttons {
+    margin-bottom: 16px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+
+    .el-button {
+      height: 32px;
+    }
+  }
+
+  .menu-table {
+    .el-table {
+      .el-table__row {
+        &:hover {
+          background-color: #f5f7fa;
+        }
+      }
+
+      .el-table__cell {
+        padding: 8px 0;
+      }
+    }
+
+    .menu-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      font-size: 16px;
+    }
+
+    .menu-status {
+      .el-tag {
+        border-radius: 4px;
+      }
+    }
+
+    .table-actions {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+
+      .el-button {
+        height: 28px;
+        padding: 4px 8px;
+        font-size: 12px;
+        border-radius: 4px;
+
+        &.is-text {
+          padding: 4px 6px;
+        }
+      }
+    }
+  }
+
+  .menu-dialog {
+    .el-dialog__body {
+      padding: 20px;
+    }
+
+    .el-form {
+      .el-form-item {
+        margin-bottom: 18px;
+
+        .el-form-item__label {
+          font-weight: 500;
+          color: #303133;
+        }
+
+        .el-input,
+        .el-select,
+        .el-input-number {
+          width: 100%;
+        }
+
+        .el-radio-group {
+          .el-radio {
+            margin-right: 16px;
+          }
+        }
+      }
+    }
+
+    .dialog-footer {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      padding-top: 16px;
+      border-top: 1px solid #ebeef5;
+    }
+  }
+
+  // 响应式设计
+  @media (max-width: 768px) {
+    .search-area {
+      .el-form {
+        .el-form-item {
+          margin-bottom: 12px;
+        }
+      }
+    }
+
+    .action-buttons {
+      flex-wrap: wrap;
+    }
+
+    .table-actions {
+      flex-direction: column;
+      gap: 2px;
+
+      .el-button {
+        width: 100%;
+        justify-content: center;
+      }
+    }
+  }
+}
+
+// 深色主题适配
+.dark {
+  .search-area {
+    background-color: #262727;
+    border: 1px solid #414243;
+  }
+
+  .menu-table {
+    .el-table {
+      background-color: #1d1e1f;
+      color: #e5eaf3;
+
+      .el-table__row {
+        &:hover {
+          background-color: #262727;
+        }
+      }
+    }
+  }
+}
+
+// 动画效果
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.slide-enter-active,
+.slide-leave-active {
+  transition: all 0.3s ease;
+}
+
+.slide-enter-from {
+  transform: translateX(-20px);
+  opacity: 0;
+}
+
+.slide-leave-to {
+  transform: translateX(20px);
+  opacity: 0;
+}

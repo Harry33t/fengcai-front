@@ -1,0 +1,2859 @@
+# Generated with protoc-gen-openapi
+# https://github.com/google/gnostic/tree/master/cmd/protoc-gen-openapi
+
+openapi: 3.0.3
+info:
+    title: ""
+    version: 0.0.1
+paths:
+    /v1/companies:
+        get:
+            tags:
+                - CompanyService
+            description: 获取企业列表
+            operationId: CompanyService_ListCompanies
+            parameters:
+                - name: name
+                  in: query
+                  schema:
+                    type: string
+                - name: customerType
+                  in: query
+                  schema:
+                    type: string
+                - name: companyTypes
+                  in: query
+                  schema:
+                    type: array
+                    items:
+                        type: string
+                - name: page
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: pageSize
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/company.service.v1.ListCompaniesReply'
+    /v1/company:
+        get:
+            tags:
+                - CompanyService
+            description: 获取企业详情
+            operationId: CompanyService_GetCompany
+            parameters:
+                - name: id
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/company.service.v1.GetCompanyReply'
+        put:
+            tags:
+                - CompanyService
+            description: 更新企业
+            operationId: CompanyService_UpdateCompany
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/company.service.v1.UpdateCompanyRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/company.service.v1.UpdateCompanyReply'
+        post:
+            tags:
+                - CompanyService
+            description: 创建企业
+            operationId: CompanyService_CreateCompany
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/company.service.v1.CreateCompanyRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/company.service.v1.CreateCompanyReply'
+        delete:
+            tags:
+                - CompanyService
+            description: 删除企业
+            operationId: CompanyService_DeleteCompany
+            parameters:
+                - name: id
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+    /v1/company-qualification:
+        get:
+            tags:
+                - CompanyQualificationService
+            description: 获取企业资质详情
+            operationId: CompanyQualificationService_GetCompanyQualification
+            parameters:
+                - name: id
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/company_qualification.service.v1.GetCompanyQualificationReply'
+        put:
+            tags:
+                - CompanyQualificationService
+            description: 更新企业资质
+            operationId: CompanyQualificationService_UpdateCompanyQualification
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/company_qualification.service.v1.UpdateCompanyQualificationRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/company_qualification.service.v1.UpdateCompanyQualificationReply'
+        post:
+            tags:
+                - CompanyQualificationService
+            description: 创建企业资质
+            operationId: CompanyQualificationService_CreateCompanyQualification
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/company_qualification.service.v1.CreateCompanyQualificationRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/company_qualification.service.v1.CreateCompanyQualificationReply'
+        delete:
+            tags:
+                - CompanyQualificationService
+            description: 删除企业资质
+            operationId: CompanyQualificationService_DeleteCompanyQualification
+            parameters:
+                - name: id
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+    /v1/company-qualifications:
+        get:
+            tags:
+                - CompanyQualificationService
+            description: 获取企业资质列表
+            operationId: CompanyQualificationService_ListCompanyQualifications
+            parameters:
+                - name: companyId
+                  in: query
+                  schema:
+                    type: string
+                - name: qualificationType
+                  in: query
+                  schema:
+                    type: string
+                - name: qualificationSeries
+                  in: query
+                  schema:
+                    type: string
+                - name: certificateNumber
+                  in: query
+                  schema:
+                    type: string
+                - name: issuingAuthority
+                  in: query
+                  schema:
+                    type: string
+                - name: page
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: pageSize
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/company_qualification.service.v1.ListCompanyQualificationsReply'
+    /v1/credit-manual:
+        get:
+            tags:
+                - CreditManualService
+            description: 获取信用手册详情
+            operationId: CreditManualService_GetCreditManual
+            parameters:
+                - name: id
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/credit_manual.service.v1.GetCreditManualReply'
+        put:
+            tags:
+                - CreditManualService
+            description: 更新信用手册
+            operationId: CreditManualService_UpdateCreditManual
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/credit_manual.service.v1.UpdateCreditManualRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/credit_manual.service.v1.UpdateCreditManualReply'
+        post:
+            tags:
+                - CreditManualService
+            description: 创建信用手册
+            operationId: CreditManualService_CreateCreditManual
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/credit_manual.service.v1.CreateCreditManualRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/credit_manual.service.v1.CreateCreditManualReply'
+        delete:
+            tags:
+                - CreditManualService
+            description: 删除信用手册
+            operationId: CreditManualService_DeleteCreditManual
+            parameters:
+                - name: id
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+    /v1/credit-manuals:
+        get:
+            tags:
+                - CreditManualService
+            description: 获取信用手册列表
+            operationId: CreditManualService_ListCreditManuals
+            parameters:
+                - name: companyId
+                  in: query
+                  schema:
+                    type: string
+                - name: page
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: pageSize
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/credit_manual.service.v1.ListCreditManualsReply'
+    /v1/dictionary/children:
+        get:
+            tags:
+                - DictionaryService
+            description: 根据字典类型和父级ID获取子级字典项
+            operationId: DictionaryService_GetChildDictionaryItems
+            parameters:
+                - name: type
+                  in: query
+                  schema:
+                    type: string
+                - name: parentId
+                  in: query
+                  schema:
+                    type: string
+                - name: isActive
+                  in: query
+                  schema:
+                    type: boolean
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/dictionary.service.v1.GetChildDictionaryItemsReply'
+    /v1/dictionary/item:
+        get:
+            tags:
+                - DictionaryService
+            description: 根据ID获取字典项详情
+            operationId: DictionaryService_GetDictionaryItem
+            parameters:
+                - name: id
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/dictionary.service.v1.GetDictionaryItemReply'
+    /v1/dictionary/items:
+        get:
+            tags:
+                - DictionaryService
+            description: 根据字典类型获取字典项列表
+            operationId: DictionaryService_GetDictionaryItems
+            parameters:
+                - name: type
+                  in: query
+                  schema:
+                    type: string
+                - name: isActive
+                  in: query
+                  schema:
+                    type: boolean
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/dictionary.service.v1.GetDictionaryItemsReply'
+    /v1/dictionary/manage:
+        put:
+            tags:
+                - DictionaryService
+            description: 管理员接口：更新字典项
+            operationId: DictionaryService_UpdateDictionary
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/dictionary.service.v1.UpdateDictionaryRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/dictionary.service.v1.UpdateDictionaryReply'
+        post:
+            tags:
+                - DictionaryService
+            description: 管理员接口：创建字典项
+            operationId: DictionaryService_CreateDictionary
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/dictionary.service.v1.CreateDictionaryRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/dictionary.service.v1.CreateDictionaryReply'
+        delete:
+            tags:
+                - DictionaryService
+            description: 管理员接口：删除字典项
+            operationId: DictionaryService_DeleteDictionary
+            parameters:
+                - name: id
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+    /v1/dictionary/manage/list:
+        get:
+            tags:
+                - DictionaryService
+            description: 管理员接口：获取字典列表
+            operationId: DictionaryService_ListDictionaries
+            parameters:
+                - name: type
+                  in: query
+                  schema:
+                    type: string
+                - name: parentId
+                  in: query
+                  schema:
+                    type: string
+                - name: name
+                  in: query
+                  schema:
+                    type: string
+                - name: isActive
+                  in: query
+                  schema:
+                    type: boolean
+                - name: page
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: pageSize
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/dictionary.service.v1.ListDictionariesReply'
+    /v1/dictionary/tree:
+        get:
+            tags:
+                - DictionaryService
+            description: 获取字典树结构（支持指定类型）
+            operationId: DictionaryService_GetDictionaryTree
+            parameters:
+                - name: type
+                  in: query
+                  schema:
+                    type: string
+                - name: name
+                  in: query
+                  schema:
+                    type: string
+                - name: isActive
+                  in: query
+                  schema:
+                    type: boolean
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/dictionary.service.v1.GetDictionaryTreeReply'
+    /v1/menu:
+        get:
+            tags:
+                - MenuService
+            description: 获取菜单详情
+            operationId: MenuService_GetMenu
+            parameters:
+                - name: id
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/menu.service.v1.GetMenuReply'
+        put:
+            tags:
+                - MenuService
+            description: 更新菜单
+            operationId: MenuService_UpdateMenu
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/menu.service.v1.UpdateMenuRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/menu.service.v1.UpdateMenuReply'
+        post:
+            tags:
+                - MenuService
+            description: 创建菜单
+            operationId: MenuService_CreateMenu
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/menu.service.v1.CreateMenuRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/menu.service.v1.CreateMenuReply'
+        delete:
+            tags:
+                - MenuService
+            description: 删除菜单
+            operationId: MenuService_DeleteMenu
+            parameters:
+                - name: id
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+    /v1/menu/auth:
+        get:
+            tags:
+                - MenuService
+            description: 获取按钮权限
+            operationId: MenuService_GetMenuAuth
+            parameters:
+                - name: id
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/menu.service.v1.GetMenuAuthReply'
+        put:
+            tags:
+                - MenuService
+            description: 更新按钮权限
+            operationId: MenuService_UpdateMenuAuth
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/menu.service.v1.UpdateMenuAuthRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/menu.service.v1.UpdateMenuAuthReply'
+        post:
+            tags:
+                - MenuService
+            description: 创建按钮权限
+            operationId: MenuService_CreateMenuAuth
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/menu.service.v1.CreateMenuAuthRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/menu.service.v1.CreateMenuAuthReply'
+        delete:
+            tags:
+                - MenuService
+            description: 删除按钮权限
+            operationId: MenuService_DeleteMenuAuth
+            parameters:
+                - name: id
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+    /v1/menu/auths:
+        get:
+            tags:
+                - MenuService
+            description: 获取菜单的按钮权限列表
+            operationId: MenuService_ListMenuAuths
+            parameters:
+                - name: menuId
+                  in: query
+                  schema:
+                    type: string
+                - name: page
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: pageSize
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/menu.service.v1.ListMenuAuthsReply'
+    /v1/menus:
+        get:
+            tags:
+                - MenuService
+            description: 获取菜单列表
+            operationId: MenuService_ListMenus
+            parameters:
+                - name: name
+                  in: query
+                  schema:
+                    type: string
+                - name: status
+                  in: query
+                  schema:
+                    type: string
+                - name: parentId
+                  in: query
+                  schema:
+                    type: string
+                - name: page
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: pageSize
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/menu.service.v1.ListMenusReply'
+    /v1/permission/data:
+        get:
+            tags:
+                - DataPermissionService
+            description: 获取数据权限
+            operationId: DataPermissionService_GetDataPermission
+            parameters:
+                - name: managerId
+                  in: query
+                  schema:
+                    type: string
+                - name: subordinateId
+                  in: query
+                  schema:
+                    type: string
+                - name: resourceType
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/user.v1.GetDataPermissionReply'
+        put:
+            tags:
+                - DataPermissionService
+            description: 更新数据权限
+            operationId: DataPermissionService_UpdateDataPermission
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/user.v1.UpdateDataPermissionRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/user.v1.UpdateDataPermissionReply'
+        post:
+            tags:
+                - DataPermissionService
+            description: 创建数据权限
+            operationId: DataPermissionService_CreateDataPermission
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/user.v1.CreateDataPermissionRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/user.v1.CreateDataPermissionReply'
+        delete:
+            tags:
+                - DataPermissionService
+            description: 删除数据权限
+            operationId: DataPermissionService_DeleteDataPermission
+            parameters:
+                - name: managerId
+                  in: query
+                  schema:
+                    type: string
+                - name: subordinateId
+                  in: query
+                  schema:
+                    type: string
+                - name: resourceType
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/user.v1.DeleteDataPermissionReply'
+    /v1/permission/data/list:
+        get:
+            tags:
+                - DataPermissionService
+            description: 获取数据权限列表
+            operationId: DataPermissionService_ListDataPermissions
+            parameters:
+                - name: managerId
+                  in: query
+                  schema:
+                    type: string
+                - name: page
+                  in: query
+                  schema:
+                    type: string
+                - name: pageSize
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/user.v1.ListDataPermissionsReply'
+    /v1/role:
+        get:
+            tags:
+                - RoleService
+            description: 获取角色详情
+            operationId: RoleService_GetRole
+            parameters:
+                - name: id
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/role.service.v1.GetRoleReply'
+        put:
+            tags:
+                - RoleService
+            description: 更新角色
+            operationId: RoleService_UpdateRole
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/role.service.v1.UpdateRoleRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/role.service.v1.UpdateRoleReply'
+        post:
+            tags:
+                - RoleService
+            description: 创建角色
+            operationId: RoleService_CreateRole
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/role.service.v1.CreateRoleRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/role.service.v1.CreateRoleReply'
+        delete:
+            tags:
+                - RoleService
+            description: 删除角色
+            operationId: RoleService_DeleteRole
+            parameters:
+                - name: id
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+    /v1/role/permissions:
+        get:
+            tags:
+                - RoleService
+            description: 获取角色权限（菜单和按钮权限）
+            operationId: RoleService_GetRolePermissions
+            parameters:
+                - name: roleId
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/role.service.v1.GetRolePermissionsReply'
+        put:
+            tags:
+                - RoleService
+            description: 更新角色权限
+            operationId: RoleService_UpdateRolePermissions
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/role.service.v1.UpdateRolePermissionsRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+    /v1/roles:
+        get:
+            tags:
+                - RoleService
+            description: 获取角色列表
+            operationId: RoleService_ListRoles
+            parameters:
+                - name: name
+                  in: query
+                  schema:
+                    type: string
+                - name: status
+                  in: query
+                  schema:
+                    type: string
+                - name: page
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: pageSize
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/role.service.v1.ListRolesReply'
+    /v1/safety-license:
+        get:
+            tags:
+                - SafetyLicenseService
+            description: 获取安全许可证详情
+            operationId: SafetyLicenseService_GetSafetyLicense
+            parameters:
+                - name: id
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/safety_license.service.v1.GetSafetyLicenseReply'
+        put:
+            tags:
+                - SafetyLicenseService
+            description: 更新安全许可证
+            operationId: SafetyLicenseService_UpdateSafetyLicense
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/safety_license.service.v1.UpdateSafetyLicenseRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/safety_license.service.v1.UpdateSafetyLicenseReply'
+        post:
+            tags:
+                - SafetyLicenseService
+            description: 创建安全许可证
+            operationId: SafetyLicenseService_CreateSafetyLicense
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/safety_license.service.v1.CreateSafetyLicenseRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/safety_license.service.v1.CreateSafetyLicenseReply'
+        delete:
+            tags:
+                - SafetyLicenseService
+            description: 删除安全许可证
+            operationId: SafetyLicenseService_DeleteSafetyLicense
+            parameters:
+                - name: id
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+    /v1/safety-licenses:
+        get:
+            tags:
+                - SafetyLicenseService
+            description: 获取安全许可证列表
+            operationId: SafetyLicenseService_ListSafetyLicenses
+            parameters:
+                - name: companyId
+                  in: query
+                  schema:
+                    type: string
+                - name: page
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: pageSize
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/safety_license.service.v1.ListSafetyLicensesReply'
+    /v1/user:
+        get:
+            tags:
+                - UserService
+            description: 获取用户详情
+            operationId: UserService_GetUser
+            parameters:
+                - name: id
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/user.service.v1.GetUserReply'
+        put:
+            tags:
+                - UserService
+            description: 更新用户
+            operationId: UserService_UpdateUser
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/user.service.v1.UpdateUserRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/user.service.v1.UpdateUserReply'
+        post:
+            tags:
+                - UserService
+            description: 创建用户
+            operationId: UserService_CreateUser
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/user.service.v1.CreateUserRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/user.service.v1.CreateUserReply'
+        delete:
+            tags:
+                - UserService
+            description: 删除用户
+            operationId: UserService_DeleteUser
+            parameters:
+                - name: id
+                  in: query
+                  schema:
+                    type: string
+            responses:
+                "200":
+                    description: OK
+                    content: {}
+    /v1/user/info:
+        get:
+            tags:
+                - UserService
+            description: 获取用户信息及权限菜单
+            operationId: UserService_GetUserInfo
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/user.service.v1.GetUserInfoReply'
+    /v1/user/login:
+        post:
+            tags:
+                - UserService
+            description: 用户登录
+            operationId: UserService_Login
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/user.service.v1.LoginRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/user.service.v1.LoginReply'
+    /v1/user/logout:
+        post:
+            tags:
+                - UserService
+            description: 用户登出
+            operationId: UserService_Logout
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/user.service.v1.LogoutRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/user.service.v1.LogoutReply'
+    /v1/user/refresh:
+        post:
+            tags:
+                - UserService
+            description: 刷新token
+            operationId: UserService_RefreshToken
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/user.service.v1.RefreshTokenReply'
+    /v1/users:
+        get:
+            tags:
+                - UserService
+            description: 获取用户列表
+            operationId: UserService_ListUsers
+            parameters:
+                - name: username
+                  in: query
+                  schema:
+                    type: string
+                - name: name
+                  in: query
+                  schema:
+                    type: string
+                - name: phone
+                  in: query
+                  schema:
+                    type: string
+                - name: roleId
+                  in: query
+                  schema:
+                    type: string
+                - name: manageId
+                  in: query
+                  schema:
+                    type: string
+                - name: page
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+                - name: pageSize
+                  in: query
+                  schema:
+                    type: integer
+                    format: int32
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/user.service.v1.ListUsersReply'
+components:
+    schemas:
+        company.service.v1.Company:
+            type: object
+            properties:
+                id:
+                    type: string
+                name:
+                    type: string
+                socialCreditCode:
+                    type: string
+                address:
+                    type: string
+                contactPerson:
+                    type: string
+                contactPhone:
+                    type: string
+                customerType:
+                    type: string
+                companyTypes:
+                    type: array
+                    items:
+                        type: string
+                createdBy:
+                    type: string
+                createdTime:
+                    type: string
+                updatedTime:
+                    type: string
+            description: 企业信息
+        company.service.v1.CreateCompanyReply:
+            type: object
+            properties:
+                id:
+                    type: string
+                name:
+                    type: string
+                socialCreditCode:
+                    type: string
+                address:
+                    type: string
+                contactPerson:
+                    type: string
+                contactPhone:
+                    type: string
+                customerType:
+                    type: string
+                companyTypes:
+                    type: array
+                    items:
+                        type: string
+                createdBy:
+                    type: string
+                createdTime:
+                    type: string
+                updatedTime:
+                    type: string
+            description: 创建企业响应
+        company.service.v1.CreateCompanyRequest:
+            type: object
+            properties:
+                name:
+                    type: string
+                socialCreditCode:
+                    type: string
+                address:
+                    type: string
+                contactPerson:
+                    type: string
+                contactPhone:
+                    type: string
+                customerType:
+                    type: string
+                companyTypes:
+                    type: array
+                    items:
+                        type: string
+            description: 创建企业请求
+        company.service.v1.GetCompanyReply:
+            type: object
+            properties:
+                id:
+                    type: string
+                name:
+                    type: string
+                socialCreditCode:
+                    type: string
+                address:
+                    type: string
+                contactPerson:
+                    type: string
+                contactPhone:
+                    type: string
+                customerType:
+                    type: string
+                companyTypes:
+                    type: array
+                    items:
+                        type: string
+                createdBy:
+                    type: string
+                createdTime:
+                    type: string
+                updatedTime:
+                    type: string
+            description: 获取企业响应
+        company.service.v1.ListCompaniesReply:
+            type: object
+            properties:
+                companies:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/company.service.v1.Company'
+                total:
+                    type: string
+            description: 获取企业列表响应
+        company.service.v1.UpdateCompanyReply:
+            type: object
+            properties:
+                id:
+                    type: string
+                name:
+                    type: string
+                socialCreditCode:
+                    type: string
+                address:
+                    type: string
+                contactPerson:
+                    type: string
+                contactPhone:
+                    type: string
+                customerType:
+                    type: string
+                companyTypes:
+                    type: array
+                    items:
+                        type: string
+                createdBy:
+                    type: string
+                createdTime:
+                    type: string
+                updatedTime:
+                    type: string
+            description: 更新企业响应
+        company.service.v1.UpdateCompanyRequest:
+            type: object
+            properties:
+                id:
+                    type: string
+                name:
+                    type: string
+                socialCreditCode:
+                    type: string
+                address:
+                    type: string
+                contactPerson:
+                    type: string
+                contactPhone:
+                    type: string
+                customerType:
+                    type: string
+                companyTypes:
+                    type: array
+                    items:
+                        type: string
+            description: 更新企业请求
+        company_qualification.service.v1.CompanyQualification:
+            type: object
+            properties:
+                id:
+                    type: string
+                companyId:
+                    type: string
+                qualificationType:
+                    type: string
+                qualificationSeries:
+                    type: string
+                qualificationCategory:
+                    type: string
+                grade:
+                    type: string
+                certificateNumber:
+                    type: string
+                issuingAuthority:
+                    type: string
+                validUntil:
+                    type: string
+                createdBy:
+                    type: string
+                createdTime:
+                    type: string
+                updatedTime:
+                    type: string
+            description: 企业资质信息
+        company_qualification.service.v1.CreateCompanyQualificationReply:
+            type: object
+            properties:
+                id:
+                    type: string
+                companyId:
+                    type: string
+                qualificationType:
+                    type: string
+                qualificationSeries:
+                    type: string
+                qualificationCategory:
+                    type: string
+                grade:
+                    type: string
+                certificateNumber:
+                    type: string
+                issuingAuthority:
+                    type: string
+                validUntil:
+                    type: string
+                createdBy:
+                    type: string
+                createdTime:
+                    type: string
+                updatedTime:
+                    type: string
+            description: 创建企业资质响应
+        company_qualification.service.v1.CreateCompanyQualificationRequest:
+            type: object
+            properties:
+                companyId:
+                    type: string
+                qualificationType:
+                    type: string
+                qualificationSeries:
+                    type: string
+                qualificationCategory:
+                    type: string
+                grade:
+                    type: string
+                certificateNumber:
+                    type: string
+                issuingAuthority:
+                    type: string
+                validUntil:
+                    type: string
+            description: 创建企业资质请求
+        company_qualification.service.v1.GetCompanyQualificationReply:
+            type: object
+            properties:
+                id:
+                    type: string
+                companyId:
+                    type: string
+                qualificationType:
+                    type: string
+                qualificationSeries:
+                    type: string
+                qualificationCategory:
+                    type: string
+                grade:
+                    type: string
+                certificateNumber:
+                    type: string
+                issuingAuthority:
+                    type: string
+                validUntil:
+                    type: string
+                createdBy:
+                    type: string
+                createdTime:
+                    type: string
+                updatedTime:
+                    type: string
+            description: 获取企业资质响应
+        company_qualification.service.v1.ListCompanyQualificationsReply:
+            type: object
+            properties:
+                companyQualifications:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/company_qualification.service.v1.CompanyQualification'
+                total:
+                    type: string
+            description: 获取企业资质列表响应
+        company_qualification.service.v1.UpdateCompanyQualificationReply:
+            type: object
+            properties:
+                id:
+                    type: string
+                companyId:
+                    type: string
+                qualificationType:
+                    type: string
+                qualificationSeries:
+                    type: string
+                qualificationCategory:
+                    type: string
+                grade:
+                    type: string
+                certificateNumber:
+                    type: string
+                issuingAuthority:
+                    type: string
+                validUntil:
+                    type: string
+                createdBy:
+                    type: string
+                createdTime:
+                    type: string
+                updatedTime:
+                    type: string
+            description: 更新企业资质响应
+        company_qualification.service.v1.UpdateCompanyQualificationRequest:
+            type: object
+            properties:
+                id:
+                    type: string
+                qualificationType:
+                    type: string
+                qualificationSeries:
+                    type: string
+                qualificationCategory:
+                    type: string
+                grade:
+                    type: string
+                certificateNumber:
+                    type: string
+                issuingAuthority:
+                    type: string
+                validUntil:
+                    type: string
+            description: 更新企业资质请求
+        credit_manual.service.v1.CreateCreditManualReply:
+            type: object
+            properties:
+                id:
+                    type: string
+                companyId:
+                    type: string
+                manualNumber:
+                    type: string
+                issuingAuthority:
+                    type: string
+                validUntil:
+                    type: string
+                createdBy:
+                    type: string
+                createdTime:
+                    type: string
+                updatedTime:
+                    type: string
+            description: 创建信用手册响应
+        credit_manual.service.v1.CreateCreditManualRequest:
+            type: object
+            properties:
+                companyId:
+                    type: string
+                manualNumber:
+                    type: string
+                issuingAuthority:
+                    type: string
+                validUntil:
+                    type: string
+            description: 创建信用手册请求
+        credit_manual.service.v1.CreditManual:
+            type: object
+            properties:
+                id:
+                    type: string
+                companyId:
+                    type: string
+                manualNumber:
+                    type: string
+                issuingAuthority:
+                    type: string
+                validUntil:
+                    type: string
+                createdBy:
+                    type: string
+                createdTime:
+                    type: string
+                updatedTime:
+                    type: string
+            description: 信用手册信息
+        credit_manual.service.v1.GetCreditManualReply:
+            type: object
+            properties:
+                id:
+                    type: string
+                companyId:
+                    type: string
+                manualNumber:
+                    type: string
+                issuingAuthority:
+                    type: string
+                validUntil:
+                    type: string
+                createdBy:
+                    type: string
+                createdTime:
+                    type: string
+                updatedTime:
+                    type: string
+            description: 获取信用手册响应
+        credit_manual.service.v1.ListCreditManualsReply:
+            type: object
+            properties:
+                manuals:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/credit_manual.service.v1.CreditManual'
+                total:
+                    type: string
+            description: 获取信用手册列表响应
+        credit_manual.service.v1.UpdateCreditManualReply:
+            type: object
+            properties:
+                id:
+                    type: string
+                companyId:
+                    type: string
+                manualNumber:
+                    type: string
+                issuingAuthority:
+                    type: string
+                validUntil:
+                    type: string
+                createdBy:
+                    type: string
+                createdTime:
+                    type: string
+                updatedTime:
+                    type: string
+            description: 更新信用手册响应
+        credit_manual.service.v1.UpdateCreditManualRequest:
+            type: object
+            properties:
+                id:
+                    type: string
+                manualNumber:
+                    type: string
+                issuingAuthority:
+                    type: string
+                validUntil:
+                    type: string
+            description: 更新信用手册请求
+        dictionary.service.v1.CreateDictionaryReply:
+            type: object
+            properties:
+                dictionary:
+                    $ref: '#/components/schemas/dictionary.service.v1.Dictionary'
+            description: 创建字典响应
+        dictionary.service.v1.CreateDictionaryRequest:
+            type: object
+            properties:
+                type:
+                    type: string
+                parentId:
+                    type: string
+                name:
+                    type: string
+                description:
+                    type: string
+                sortOrder:
+                    type: integer
+                    format: int32
+                isActive:
+                    type: boolean
+            description: 创建字典请求
+        dictionary.service.v1.Dictionary:
+            type: object
+            properties:
+                id:
+                    type: string
+                type:
+                    type: string
+                parentId:
+                    type: string
+                name:
+                    type: string
+                description:
+                    type: string
+                sortOrder:
+                    type: integer
+                    format: int32
+                isActive:
+                    type: boolean
+                createdTime:
+                    type: string
+                updatedTime:
+                    type: string
+            description: 字典项
+        dictionary.service.v1.DictionaryTreeNode:
+            type: object
+            properties:
+                id:
+                    type: string
+                name:
+                    type: string
+                description:
+                    type: string
+                sortOrder:
+                    type: integer
+                    format: int32
+                children:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/dictionary.service.v1.DictionaryTreeNode'
+            description: 字典树节点
+        dictionary.service.v1.GetChildDictionaryItemsReply:
+            type: object
+            properties:
+                items:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/dictionary.service.v1.Dictionary'
+            description: 获取子级字典项响应
+        dictionary.service.v1.GetDictionaryItemReply:
+            type: object
+            properties:
+                item:
+                    $ref: '#/components/schemas/dictionary.service.v1.Dictionary'
+            description: 获取字典项详情响应
+        dictionary.service.v1.GetDictionaryItemsReply:
+            type: object
+            properties:
+                items:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/dictionary.service.v1.Dictionary'
+            description: 获取字典项响应
+        dictionary.service.v1.GetDictionaryTreeReply:
+            type: object
+            properties:
+                tree:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/dictionary.service.v1.DictionaryTreeNode'
+            description: 获取字典树响应
+        dictionary.service.v1.ListDictionariesReply:
+            type: object
+            properties:
+                dictionaries:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/dictionary.service.v1.Dictionary'
+                total:
+                    type: string
+            description: 获取字典列表响应
+        dictionary.service.v1.UpdateDictionaryReply:
+            type: object
+            properties:
+                dictionary:
+                    $ref: '#/components/schemas/dictionary.service.v1.Dictionary'
+            description: 更新字典响应
+        dictionary.service.v1.UpdateDictionaryRequest:
+            type: object
+            properties:
+                id:
+                    type: string
+                type:
+                    type: string
+                parentId:
+                    type: string
+                name:
+                    type: string
+                description:
+                    type: string
+                sortOrder:
+                    type: integer
+                    format: int32
+                isActive:
+                    type: boolean
+            description: 更新字典请求
+        menu.service.v1.CreateMenuAuthReply:
+            type: object
+            properties:
+                id:
+                    type: string
+                menuId:
+                    type: string
+                mark:
+                    type: string
+                title:
+                    type: string
+                createdTime:
+                    type: string
+                updatedTime:
+                    type: string
+            description: 创建按钮权限响应
+        menu.service.v1.CreateMenuAuthRequest:
+            type: object
+            properties:
+                menuId:
+                    type: string
+                mark:
+                    type: string
+                title:
+                    type: string
+            description: 创建按钮权限请求
+        menu.service.v1.CreateMenuReply:
+            type: object
+            properties:
+                id:
+                    type: string
+                path:
+                    type: string
+                name:
+                    type: string
+                component:
+                    type: string
+                title:
+                    type: string
+                icon:
+                    type: string
+                showBadge:
+                    type: string
+                showTextBadge:
+                    type: string
+                isHide:
+                    type: string
+                isHideTab:
+                    type: string
+                link:
+                    type: string
+                isIframe:
+                    type: string
+                keepAlive:
+                    type: string
+                isFirstLevel:
+                    type: string
+                status:
+                    type: string
+                level:
+                    type: string
+                parentId:
+                    type: string
+                sort:
+                    type: string
+                createdTime:
+                    type: string
+                updatedTime:
+                    type: string
+            description: 创建菜单响应
+        menu.service.v1.CreateMenuRequest:
+            type: object
+            properties:
+                path:
+                    type: string
+                name:
+                    type: string
+                component:
+                    type: string
+                title:
+                    type: string
+                icon:
+                    type: string
+                showBadge:
+                    type: string
+                showTextBadge:
+                    type: string
+                isHide:
+                    type: string
+                isHideTab:
+                    type: string
+                link:
+                    type: string
+                isIframe:
+                    type: string
+                keepAlive:
+                    type: string
+                isFirstLevel:
+                    type: string
+                status:
+                    type: string
+                parentId:
+                    type: string
+                sort:
+                    type: string
+            description: 创建菜单请求
+        menu.service.v1.GetMenuAuthReply:
+            type: object
+            properties:
+                id:
+                    type: string
+                menuId:
+                    type: string
+                mark:
+                    type: string
+                title:
+                    type: string
+                createdTime:
+                    type: string
+                updatedTime:
+                    type: string
+            description: 获取按钮权限响应
+        menu.service.v1.GetMenuReply:
+            type: object
+            properties:
+                id:
+                    type: string
+                path:
+                    type: string
+                name:
+                    type: string
+                component:
+                    type: string
+                title:
+                    type: string
+                icon:
+                    type: string
+                showBadge:
+                    type: string
+                showTextBadge:
+                    type: string
+                isHide:
+                    type: string
+                isHideTab:
+                    type: string
+                link:
+                    type: string
+                isIframe:
+                    type: string
+                keepAlive:
+                    type: string
+                isFirstLevel:
+                    type: string
+                status:
+                    type: string
+                level:
+                    type: string
+                parentId:
+                    type: string
+                sort:
+                    type: string
+                createdTime:
+                    type: string
+                updatedTime:
+                    type: string
+            description: 获取菜单响应
+        menu.service.v1.ListMenuAuthsReply:
+            type: object
+            properties:
+                auths:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/menu.service.v1.MenuAuth'
+                total:
+                    type: string
+            description: 获取菜单按钮权限列表响应
+        menu.service.v1.ListMenusReply:
+            type: object
+            properties:
+                menus:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/menu.service.v1.Menu'
+                total:
+                    type: string
+            description: 获取菜单列表响应
+        menu.service.v1.Menu:
+            type: object
+            properties:
+                id:
+                    type: string
+                path:
+                    type: string
+                name:
+                    type: string
+                component:
+                    type: string
+                title:
+                    type: string
+                icon:
+                    type: string
+                showBadge:
+                    type: string
+                showTextBadge:
+                    type: string
+                isHide:
+                    type: string
+                isHideTab:
+                    type: string
+                link:
+                    type: string
+                isIframe:
+                    type: string
+                keepAlive:
+                    type: string
+                isFirstLevel:
+                    type: string
+                status:
+                    type: string
+                level:
+                    type: string
+                parentId:
+                    type: string
+                sort:
+                    type: string
+                createdTime:
+                    type: string
+                updatedTime:
+                    type: string
+            description: 菜单信息
+        menu.service.v1.MenuAuth:
+            type: object
+            properties:
+                id:
+                    type: string
+                menuId:
+                    type: string
+                mark:
+                    type: string
+                title:
+                    type: string
+                createdTime:
+                    type: string
+                updatedTime:
+                    type: string
+            description: 按钮权限信息
+        menu.service.v1.MenuAuthWithPermission:
+            type: object
+            properties:
+                auth:
+                    $ref: '#/components/schemas/menu.service.v1.MenuAuth'
+                hasPermission:
+                    type: boolean
+            description: 带权限标记的按钮权限
+        menu.service.v1.MenuTree:
+            type: object
+            properties:
+                menu:
+                    $ref: '#/components/schemas/menu.service.v1.Menu'
+                children:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/menu.service.v1.MenuTree'
+                auths:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/menu.service.v1.MenuAuth'
+            description: 菜单树结构
+        menu.service.v1.MenuWithPermission:
+            type: object
+            properties:
+                menu:
+                    $ref: '#/components/schemas/menu.service.v1.Menu'
+                hasPermission:
+                    type: boolean
+                children:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/menu.service.v1.MenuWithPermission'
+                auths:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/menu.service.v1.MenuAuthWithPermission'
+            description: 带权限标记的菜单
+        menu.service.v1.UpdateMenuAuthReply:
+            type: object
+            properties:
+                id:
+                    type: string
+                menuId:
+                    type: string
+                mark:
+                    type: string
+                title:
+                    type: string
+                createdTime:
+                    type: string
+                updatedTime:
+                    type: string
+            description: 更新按钮权限响应
+        menu.service.v1.UpdateMenuAuthRequest:
+            type: object
+            properties:
+                id:
+                    type: string
+                menuId:
+                    type: string
+                mark:
+                    type: string
+                title:
+                    type: string
+            description: 更新按钮权限请求
+        menu.service.v1.UpdateMenuReply:
+            type: object
+            properties:
+                id:
+                    type: string
+                path:
+                    type: string
+                name:
+                    type: string
+                component:
+                    type: string
+                title:
+                    type: string
+                icon:
+                    type: string
+                showBadge:
+                    type: string
+                showTextBadge:
+                    type: string
+                isHide:
+                    type: string
+                isHideTab:
+                    type: string
+                link:
+                    type: string
+                isIframe:
+                    type: string
+                keepAlive:
+                    type: string
+                isFirstLevel:
+                    type: string
+                status:
+                    type: string
+                level:
+                    type: string
+                parentId:
+                    type: string
+                sort:
+                    type: string
+                createdTime:
+                    type: string
+                updatedTime:
+                    type: string
+            description: 更新菜单响应
+        menu.service.v1.UpdateMenuRequest:
+            type: object
+            properties:
+                id:
+                    type: string
+                path:
+                    type: string
+                name:
+                    type: string
+                component:
+                    type: string
+                title:
+                    type: string
+                icon:
+                    type: string
+                showBadge:
+                    type: string
+                showTextBadge:
+                    type: string
+                isHide:
+                    type: string
+                isHideTab:
+                    type: string
+                link:
+                    type: string
+                isIframe:
+                    type: string
+                keepAlive:
+                    type: string
+                isFirstLevel:
+                    type: string
+                status:
+                    type: string
+                parentId:
+                    type: string
+                sort:
+                    type: string
+            description: 更新菜单请求
+        role.service.v1.CreateRoleReply:
+            type: object
+            properties:
+                id:
+                    type: string
+                name:
+                    type: string
+                desc:
+                    type: string
+                status:
+                    type: string
+                createdTime:
+                    type: string
+                updatedTime:
+                    type: string
+            description: 创建角色响应
+        role.service.v1.CreateRoleRequest:
+            type: object
+            properties:
+                name:
+                    type: string
+                desc:
+                    type: string
+                status:
+                    type: string
+            description: 创建角色请求
+        role.service.v1.GetRolePermissionsReply:
+            type: object
+            properties:
+                menuTrees:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/menu.service.v1.MenuWithPermission'
+            description: 获取角色权限响应
+        role.service.v1.GetRoleReply:
+            type: object
+            properties:
+                id:
+                    type: string
+                name:
+                    type: string
+                desc:
+                    type: string
+                status:
+                    type: string
+                createdTime:
+                    type: string
+                updatedTime:
+                    type: string
+            description: 获取角色响应
+        role.service.v1.ListRolesReply:
+            type: object
+            properties:
+                roles:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/role.service.v1.RoleWithUsers'
+                total:
+                    type: string
+            description: 获取角色列表响应
+        role.service.v1.Role:
+            type: object
+            properties:
+                id:
+                    type: string
+                name:
+                    type: string
+                desc:
+                    type: string
+                status:
+                    type: string
+                createdTime:
+                    type: string
+                updatedTime:
+                    type: string
+            description: 角色信息
+        role.service.v1.RoleWithUsers:
+            type: object
+            properties:
+                role:
+                    $ref: '#/components/schemas/role.service.v1.Role'
+                users:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/role.service.v1.UserInfo'
+            description: 角色及其用户信息
+        role.service.v1.UpdateRolePermissionsRequest:
+            type: object
+            properties:
+                roleId:
+                    type: string
+                menuIds:
+                    type: array
+                    items:
+                        type: string
+                authIds:
+                    type: array
+                    items:
+                        type: string
+            description: 更新角色权限请求
+        role.service.v1.UpdateRoleReply:
+            type: object
+            properties:
+                id:
+                    type: string
+                name:
+                    type: string
+                desc:
+                    type: string
+                status:
+                    type: string
+                createdTime:
+                    type: string
+                updatedTime:
+                    type: string
+            description: 更新角色响应
+        role.service.v1.UpdateRoleRequest:
+            type: object
+            properties:
+                id:
+                    type: string
+                name:
+                    type: string
+                desc:
+                    type: string
+                status:
+                    type: string
+            description: 更新角色请求
+        role.service.v1.UserInfo:
+            type: object
+            properties:
+                id:
+                    type: string
+                username:
+                    type: string
+                name:
+                    type: string
+            description: 用户信息（简化版）
+        safety_license.service.v1.CreateSafetyLicenseReply:
+            type: object
+            properties:
+                id:
+                    type: string
+                companyId:
+                    type: string
+                licenseNumber:
+                    type: string
+                issuingAuthority:
+                    type: string
+                validUntil:
+                    type: string
+                createdBy:
+                    type: string
+                createdTime:
+                    type: string
+                updatedTime:
+                    type: string
+            description: 创建安全许可证响应
+        safety_license.service.v1.CreateSafetyLicenseRequest:
+            type: object
+            properties:
+                companyId:
+                    type: string
+                licenseNumber:
+                    type: string
+                issuingAuthority:
+                    type: string
+                validUntil:
+                    type: string
+            description: 创建安全许可证请求
+        safety_license.service.v1.GetSafetyLicenseReply:
+            type: object
+            properties:
+                id:
+                    type: string
+                companyId:
+                    type: string
+                licenseNumber:
+                    type: string
+                issuingAuthority:
+                    type: string
+                validUntil:
+                    type: string
+                createdBy:
+                    type: string
+                createdTime:
+                    type: string
+                updatedTime:
+                    type: string
+            description: 获取安全许可证响应
+        safety_license.service.v1.ListSafetyLicensesReply:
+            type: object
+            properties:
+                licenses:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/safety_license.service.v1.SafetyLicense'
+                total:
+                    type: string
+            description: 获取安全许可证列表响应
+        safety_license.service.v1.SafetyLicense:
+            type: object
+            properties:
+                id:
+                    type: string
+                companyId:
+                    type: string
+                licenseNumber:
+                    type: string
+                issuingAuthority:
+                    type: string
+                validUntil:
+                    type: string
+                createdBy:
+                    type: string
+                createdTime:
+                    type: string
+                updatedTime:
+                    type: string
+            description: 安全许可证信息
+        safety_license.service.v1.UpdateSafetyLicenseReply:
+            type: object
+            properties:
+                id:
+                    type: string
+                companyId:
+                    type: string
+                licenseNumber:
+                    type: string
+                issuingAuthority:
+                    type: string
+                validUntil:
+                    type: string
+                createdBy:
+                    type: string
+                createdTime:
+                    type: string
+                updatedTime:
+                    type: string
+            description: 更新安全许可证响应
+        safety_license.service.v1.UpdateSafetyLicenseRequest:
+            type: object
+            properties:
+                id:
+                    type: string
+                licenseNumber:
+                    type: string
+                issuingAuthority:
+                    type: string
+                validUntil:
+                    type: string
+            description: 更新安全许可证请求
+        user.service.v1.CreateUserReply:
+            type: object
+            properties:
+                id:
+                    type: string
+                username:
+                    type: string
+                name:
+                    type: string
+                phone:
+                    type: string
+                gender:
+                    type: string
+                status:
+                    type: string
+                roleId:
+                    type: string
+                manageId:
+                    type: string
+                createdTime:
+                    type: string
+                updatedTime:
+                    type: string
+            description: 创建用户响应
+        user.service.v1.CreateUserRequest:
+            type: object
+            properties:
+                username:
+                    type: string
+                password:
+                    type: string
+                name:
+                    type: string
+                phone:
+                    type: string
+                gender:
+                    type: string
+                status:
+                    type: string
+                roleId:
+                    type: string
+                manageId:
+                    type: string
+            description: 创建用户请求
+        user.service.v1.GetUserInfoReply:
+            type: object
+            properties:
+                id:
+                    type: string
+                    description: 用户基本信息
+                username:
+                    type: string
+                name:
+                    type: string
+                phone:
+                    type: string
+                gender:
+                    type: string
+                status:
+                    type: string
+                createdTime:
+                    type: string
+                updatedTime:
+                    type: string
+                roleId:
+                    type: string
+                    description: 角色信息
+                roleName:
+                    type: string
+                roleDesc:
+                    type: string
+                manager:
+                    allOf:
+                        - $ref: '#/components/schemas/user.service.v1.User'
+                    description: 管理关系
+                subordinates:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/user.service.v1.User'
+                menuTrees:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/menu.service.v1.MenuTree'
+                    description: 权限信息
+            description: 获取用户信息及权限菜单响应
+        user.service.v1.GetUserReply:
+            type: object
+            properties:
+                id:
+                    type: string
+                    description: 用户基本信息
+                username:
+                    type: string
+                name:
+                    type: string
+                phone:
+                    type: string
+                gender:
+                    type: string
+                status:
+                    type: string
+                roleId:
+                    type: string
+                manageId:
+                    type: string
+                createdTime:
+                    type: string
+                updatedTime:
+                    type: string
+                roleName:
+                    type: string
+                    description: 角色信息
+                roleDesc:
+                    type: string
+                manager:
+                    allOf:
+                        - $ref: '#/components/schemas/user.service.v1.User'
+                    description: 管理关系
+                subordinates:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/user.service.v1.User'
+            description: 获取用户响应
+        user.service.v1.ListUsersReply:
+            type: object
+            properties:
+                users:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/user.service.v1.UserWithRelations'
+                total:
+                    type: string
+            description: 获取用户列表响应
+        user.service.v1.LoginReply:
+            type: object
+            properties:
+                id:
+                    type: string
+                username:
+                    type: string
+                name:
+                    type: string
+                phone:
+                    type: string
+                gender:
+                    type: string
+                status:
+                    type: string
+                roleId:
+                    type: string
+                manageId:
+                    type: string
+                createdTime:
+                    type: string
+                updatedTime:
+                    type: string
+            description: 登录响应
+        user.service.v1.LoginRequest:
+            type: object
+            properties:
+                username:
+                    type: string
+                password:
+                    type: string
+            description: 登录请求
+        user.service.v1.LogoutReply:
+            type: object
+            properties:
+                message:
+                    type: string
+            description: 登出响应
+        user.service.v1.LogoutRequest:
+            type: object
+            properties:
+                accessToken:
+                    type: string
+            description: 登出请求
+        user.service.v1.RefreshTokenReply:
+            type: object
+            properties: {}
+            description: 刷新token响应
+        user.service.v1.UpdateUserReply:
+            type: object
+            properties:
+                id:
+                    type: string
+                username:
+                    type: string
+                name:
+                    type: string
+                phone:
+                    type: string
+                gender:
+                    type: string
+                status:
+                    type: string
+                roleId:
+                    type: string
+                manageId:
+                    type: string
+                createdTime:
+                    type: string
+                updatedTime:
+                    type: string
+            description: 更新用户响应
+        user.service.v1.UpdateUserRequest:
+            type: object
+            properties:
+                id:
+                    type: string
+                username:
+                    type: string
+                password:
+                    type: string
+                name:
+                    type: string
+                phone:
+                    type: string
+                gender:
+                    type: string
+                status:
+                    type: string
+                roleId:
+                    type: string
+                manageId:
+                    type: string
+            description: 更新用户请求
+        user.service.v1.User:
+            type: object
+            properties:
+                id:
+                    type: string
+                username:
+                    type: string
+                name:
+                    type: string
+                phone:
+                    type: string
+                gender:
+                    type: string
+                status:
+                    type: string
+                roleId:
+                    type: string
+                manageId:
+                    type: string
+                createdTime:
+                    type: string
+                updatedTime:
+                    type: string
+            description: 用户信息
+        user.service.v1.UserWithRelations:
+            type: object
+            properties:
+                user:
+                    $ref: '#/components/schemas/user.service.v1.User'
+                roleName:
+                    type: string
+                roleDesc:
+                    type: string
+                manager:
+                    $ref: '#/components/schemas/user.service.v1.User'
+                subordinates:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/user.service.v1.User'
+            description: 用户关联信息
+        user.v1.CreateDataPermissionReply:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                message:
+                    type: string
+            description: 创建数据权限响应
+        user.v1.CreateDataPermissionRequest:
+            type: object
+            properties:
+                managerId:
+                    type: string
+                subordinateId:
+                    type: string
+                resourceType:
+                    type: string
+                canCreate:
+                    type: boolean
+                canRead:
+                    type: boolean
+                canUpdate:
+                    type: boolean
+                canDelete:
+                    type: boolean
+            description: 创建数据权限请求
+        user.v1.DataPermission:
+            type: object
+            properties:
+                id:
+                    type: string
+                managerId:
+                    type: string
+                subordinateId:
+                    type: string
+                resourceType:
+                    type: string
+                canCreate:
+                    type: boolean
+                canRead:
+                    type: boolean
+                canUpdate:
+                    type: boolean
+                canDelete:
+                    type: boolean
+                isActive:
+                    type: boolean
+                createdBy:
+                    type: string
+                subordinateName:
+                    type: string
+            description: 数据权限实体
+        user.v1.DeleteDataPermissionReply:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                message:
+                    type: string
+            description: 删除数据权限响应
+        user.v1.GetDataPermissionReply:
+            type: object
+            properties:
+                permission:
+                    $ref: '#/components/schemas/user.v1.DataPermission'
+            description: 获取数据权限响应
+        user.v1.GetUserInfoReply:
+            type: object
+            properties:
+                user:
+                    $ref: '#/components/schemas/user.v1.User'
+                dataPermissions:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/user.v1.DataPermission'
+            description: 获取用户信息响应
+        user.v1.ListDataPermissionsReply:
+            type: object
+            properties:
+                permissions:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/user.v1.DataPermission'
+                total:
+                    type: string
+                page:
+                    type: string
+                pageSize:
+                    type: string
+            description: 获取数据权限列表响应
+        user.v1.UpdateDataPermissionReply:
+            type: object
+            properties:
+                success:
+                    type: boolean
+                message:
+                    type: string
+            description: 更新数据权限响应
+        user.v1.UpdateDataPermissionRequest:
+            type: object
+            properties:
+                managerId:
+                    type: string
+                subordinateId:
+                    type: string
+                resourceType:
+                    type: string
+                canCreate:
+                    type: boolean
+                canRead:
+                    type: boolean
+                canUpdate:
+                    type: boolean
+                canDelete:
+                    type: boolean
+            description: 更新数据权限请求
+        user.v1.User:
+            type: object
+            properties:
+                id:
+                    type: string
+                username:
+                    type: string
+                name:
+                    type: string
+                phone:
+                    type: string
+                gender:
+                    type: string
+                roleId:
+                    type: string
+                manageId:
+                    type: string
+            description: 用户信息
+tags:
+    - name: CompanyQualificationService
+      description: 企业资质管理服务
+    - name: CompanyService
+      description: 企业管理服务
+    - name: CreditManualService
+      description: 信用手册服务
+    - name: DataPermissionService
+      description: 数据权限服务
+    - name: DictionaryService
+      description: 通用字典服务
+    - name: MenuService
+      description: 菜单服务
+    - name: RoleService
+      description: 角色服务
+    - name: SafetyLicenseService
+      description: 安全许可证服务
+    - name: UserService
+      description: 用户服务

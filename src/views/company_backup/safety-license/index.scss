@@ -1,0 +1,78 @@
+// 安全许可证管理页面样式
+.under-development {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  padding: 40px 20px;
+
+  .development-container {
+    text-align: center;
+    max-width: 500px;
+    padding: 40px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+
+    .icon-wrapper {
+      margin-bottom: 24px;
+
+      .development-icon {
+        font-size: 64px;
+        color: #409eff;
+        opacity: 0.8;
+      }
+    }
+
+    .development-title {
+      font-size: 28px;
+      font-weight: 600;
+      color: #303133;
+      margin: 0 0 16px 0;
+    }
+
+    .development-description {
+      font-size: 16px;
+      color: #606266;
+      margin: 0 0 32px 0;
+      line-height: 1.6;
+    }
+
+    .development-info {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 32px;
+
+      .info-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        .info-label {
+          font-weight: 500;
+          color: #606266;
+        }
+
+        .info-value {
+          color: #303133;
+          font-weight: 600;
+        }
+      }
+    }
+
+    .el-button {
+      padding: 12px 24px;
+      font-size: 14px;
+
+      i {
+        margin-right: 8px;
+      }
+    }
+  }
+}

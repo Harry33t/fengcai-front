@@ -158,7 +158,6 @@ export default ({ mode }: { mode: string }) => {
         'echarts',
         '@wangeditor/editor',
         '@wangeditor/editor-for-vue',
-        'vue-i18n',
         'element-plus/es/components/form/style/css',
         'element-plus/es/components/form-item/style/css',
         'element-plus/es/components/button/style/css',

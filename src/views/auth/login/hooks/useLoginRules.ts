@@ -2,12 +2,10 @@
  * 登录表单验证规则 Hook
  */
 import { computed } from 'vue'
-import { useI18n } from 'vue-i18n'
 import type { FormRules } from 'element-plus'
 import { loginRulesConfig } from '../config'
 
 export function useLoginRules() {
-  const { t } = useI18n()
 
   // 使用配置文件中的规则，支持国际化
   const rules = computed<FormRules>(() => ({

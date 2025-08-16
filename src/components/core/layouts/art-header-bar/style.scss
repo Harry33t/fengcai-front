@@ -359,6 +359,39 @@
           height: 80px;
         }
 
+        .user-info {
+          display: flex;
+          align-items: center;
+          cursor: pointer;
+          padding: 5px 8px;
+          border-radius: 6px;
+          transition: background-color 0.3s;
+
+          &:hover {
+            background-color: rgba(var(--art-gray-200-rgb), 0.5);
+          }
+
+          .cover {
+            width: 34px;
+            height: 34px;
+            margin-right: 8px;
+            overflow: hidden;
+            background: #eee;
+            border-radius: 50%;
+          }
+
+          .user-name {
+            font-size: 14px;
+            color: var(--art-text-color);
+            font-weight: 500;
+            white-space: nowrap;
+            max-width: 120px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+
+        // 兼容旧的直接img样式
         .cover {
           width: 34px;
           height: 34px;

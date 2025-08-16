@@ -44,7 +44,7 @@ export const fmsRoutes: AppRouteRecord[] = [
       {
         path: 'enterprise-management',
         name: 'EnterpriseManagement',
-        component: '/enterprise/management',
+        component: '/company/list',
         meta: {
           title: '企业管理',
           keepAlive: false
@@ -53,7 +53,7 @@ export const fmsRoutes: AppRouteRecord[] = [
       {
         path: 'qualification-management',
         name: 'QualificationManagement',
-        component: '/enterprise/qualification',
+        component: '/company/qualification',
         meta: {
           title: '企业资质管理',
           keepAlive: false
@@ -62,7 +62,7 @@ export const fmsRoutes: AppRouteRecord[] = [
       {
         path: 'safety-license',
         name: 'SafetyLicense',
-        component: '/enterprise/safety-license',
+        component: '/company/safety-license',
         meta: {
           title: '安全生产许可证管理',
           keepAlive: false
@@ -71,7 +71,7 @@ export const fmsRoutes: AppRouteRecord[] = [
       {
         path: 'credit-manual',
         name: 'CreditManual',
-        component: '/enterprise/credit-manual',
+        component: '/company/credit-manual',
         meta: {
           title: '信用手册管理',
           keepAlive: false

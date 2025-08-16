@@ -79,7 +79,7 @@
           </div>
         </div>
         <!-- 语言 -->
-        <div class="btn-box" v-if="shouldShowLanguage">
+        <div class="btn-box" v-if="false" style="display: none;">
           <ElDropdown @command="changeLanguage" popper-class="langDropDownStyle">
             <div class="btn language-btn">
               <i class="iconfont-sys">&#xe611;</i>
@@ -118,7 +118,7 @@
           </ElPopover>
         </div>
         <!-- 切换主题 -->
-        <div class="btn-box" v-if="shouldShowThemeToggle" @click="themeAnimation">
+        <div class="btn-box" v-if="false" style="display: none;" @click="themeAnimation">
           <div class="btn theme-btn">
             <i class="iconfont-sys">{{ isDark ? '&#xe6b5;' : '&#xe725;' }}</i>
           </div>
@@ -129,7 +129,7 @@
           <ElPopover
             ref="userMenuPopover"
             placement="bottom-end"
-            :width="240"
+            :width="200"
             :hide-after="0"
             :offset="10"
             trigger="hover"
@@ -138,29 +138,24 @@
             popper-style="border: 1px solid var(--art-border-dashed-color); border-radius: calc(var(--custom-radius) / 2 + 4px); padding: 5px 16px; 5px 16px;"
           >
             <template #reference>
-              <img class="cover" src="@imgs/user/avatar.webp" alt="avatar" />
+              <div class="user-info">
+                <img class="cover" src="@imgs/user/avatar.webp" alt="avatar" />
+                <span class="user-name">{{ userInfo.userName || '用户' }}</span>
+              </div>
             </template>
             <template #default>
               <div class="user-menu-box">
                 <div class="user-head">
                   <img class="cover" src="@imgs/user/avatar.webp" style="float: left" />
                   <div class="user-wrap">
-                    <span class="name">{{ userInfo.userName }}</span>
-                    <span class="email">art.design@gmail.com</span>
+                    <span class="name">{{ userInfo.userName || '用户' }}</span>
+                    <span class="email">{{ userInfo.userName || '用户' }}</span>
                   </div>
                 </div>
                 <ul class="user-menu">
                   <li @click="goPage('/system/user-center')">
                     <i class="menu-icon iconfont-sys">&#xe734;</i>
                     <span class="menu-txt">{{ $t('topBar.user.userCenter') }}</span>
-                  </li>
-                  <li @click="toDocs()">
-                    <i class="menu-icon iconfont-sys" style="font-size: 15px">&#xe828;</i>
-                    <span class="menu-txt">{{ $t('topBar.user.docs') }}</span>
-                  </li>
-                  <li @click="toGithub()">
-                    <i class="menu-icon iconfont-sys">&#xe8d6;</i>
-                    <span class="menu-txt">{{ $t('topBar.user.github') }}</span>
                   </li>
                   <li @click="lockScreen()">
                     <i class="menu-icon iconfont-sys">&#xe817;</i>

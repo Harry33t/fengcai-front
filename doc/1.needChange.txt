@@ -1,0 +1,12 @@
+
+1. /dashborad 改为 workspace；  workspace/dashborad 这样的层级关系   analysis数据分析删除（原型图没有）
+2. /company 企业管理 改为enterprise-qualification 企业资质管理 ;  /company/list 改为 改为enterprise-qualification/enterprise-management 企业管理，对应原型图  
+enterprise-qualification/qualification-management 企业资质管理帮我改为这个路径。
+
+3. /permission	权限管理  data-permission	数据权限配置  user-subordinate	用户层级管理  我补充到原型图上，不变
+
+4./system	系统管理
+user	用户管理
+role	角色管理
+menu	菜单管理
+dictionary	字典管理   字典管理删除，按照原型图有一个部门管理 /system/department

@@ -26,7 +26,6 @@ export enum RoutesAlias {
 
   ContextMenu = '/widgets/context-menu', // 上下文菜单
   Qrcode = '/widgets/qrcode', // 二维码
-  Drag = '/widgets/drag', // 拖拽
   TextScroll = '/widgets/text-scroll', // 文字滚动
   Fireworks = '/widgets/fireworks', // 礼花效果
   Chat = '/template/chat', // 聊天

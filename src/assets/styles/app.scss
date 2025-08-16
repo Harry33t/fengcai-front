@@ -1,5 +1,10 @@
 // 全局样式
 
+// 防止滚动条出现/消失导致的布局偏移
+html {
+  overflow-y: scroll;
+}
+
 @font-face {
   font-family: 'DMSans';
   font-style: normal;

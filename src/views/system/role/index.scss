@@ -1,0 +1,345 @@
+.role-management {
+  padding: 20px;
+  // 防止整个页面布局偏移
+  width: 100%;
+  overflow-x: hidden;
+
+  // 搜索区域
+  .search-section {
+    margin-bottom: 20px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+    .search-form {
+      // 防止内联表单影响整体布局
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      
+      .el-form-item {
+        margin-bottom: 0;
+        margin-right: 16px;
+        
+        // 确保表单项不会影响页面布局
+        &:last-child {
+          margin-right: 0;
+        }
+      }
+      
+      // 固定输入框宽度，防止动态变化
+      .el-input,
+      .el-select {
+        flex-shrink: 0;
+      }
+    }
+  }
+
+  // 操作区域
+  .action-section {
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .action-left {
+      .el-button {
+        margin-right: 12px;
+      }
+    }
+
+    .action-right {
+      color: #666;
+      font-size: 14px;
+    }
+  }
+
+  // 表格区域
+  .table-section {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden; // 防止表格溢出
+
+    .el-table {
+      // 确保表格宽度稳定
+      table-layout: fixed;
+      
+      .status-tag {
+        &.enabled {
+          background-color: #f0f9ff;
+          color: #1890ff;
+          border-color: #91d5ff;
+        }
+
+        &.disabled {
+          background-color: #fff2f0;
+          color: #ff4d4f;
+          border-color: #ffccc7;
+        }
+      }
+
+      .table-actions {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+
+        .el-button {
+          padding: 4px 8px;
+          font-size: 12px;
+        }
+      }
+      
+      // 修复固定列问题
+      .el-table__fixed-right {
+        z-index: 10;
+      }
+      
+      // 防止列宽度变化导致的布局偏移
+      .el-table__header-wrapper,
+      .el-table__body-wrapper {
+        overflow-x: auto;
+      }
+    }
+  }
+
+  // 分页区域
+  .pagination-section {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  // 对话框样式
+  .role-dialog {
+    .el-form {
+      padding: 20px 40px;
+
+      .el-form-item {
+        margin-bottom: 24px;
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+      }
+
+      .el-textarea {
+        .el-textarea__inner {
+          min-height: 80px;
+          resize: vertical;
+        }
+      }
+    }
+
+    .dialog-footer {
+      text-align: right;
+      padding: 20px 40px;
+      border-top: 1px solid #e8e8e8;
+
+      .el-button {
+        margin-left: 12px;
+      }
+    }
+  }
+
+  // 权限管理对话框
+  .permission-dialog {
+    .permission-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding: 16px;
+      background: #f5f5f5;
+      border-radius: 6px;
+
+      .role-info {
+        .role-name {
+          font-size: 16px;
+          font-weight: 600;
+          color: #333;
+        }
+
+        .role-desc {
+          font-size: 14px;
+          color: #666;
+          margin-top: 4px;
+        }
+      }
+
+      .permission-actions {
+        .el-button {
+          margin-left: 8px;
+        }
+      }
+    }
+
+    .permission-content {
+      max-height: 50vh;
+      overflow-y: auto;
+      border: 1px solid #e8e8e8;
+      border-radius: 6px;
+      padding: 16px;
+
+      .el-tree {
+        .el-tree-node {
+          .el-tree-node__content {
+            height: 32px;
+            line-height: 32px;
+
+            &:hover {
+              background-color: #f5f7fa;
+            }
+          }
+
+          .el-tree-node__label {
+            font-size: 14px;
+            
+            .auth-node {
+              color: #409eff;
+              font-style: italic;
+            }
+            
+            .menu-node {
+              color: #333;
+              font-weight: 500;
+            }
+          }
+        }
+      }
+    }
+
+    .permission-footer {
+      margin-top: 20px;
+      text-align: right;
+      border-top: 1px solid #e8e8e8;
+      padding-top: 20px;
+
+      .el-button {
+        margin-left: 12px;
+      }
+    }
+  }
+
+  // 状态标签
+  .status-tag {
+    font-size: 12px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: 1px solid;
+
+    &.enabled {
+      background-color: #f6ffed;
+      color: #52c41a;
+      border-color: #b7eb8f;
+    }
+
+    &.disabled {
+      background-color: #fff2f0;
+      color: #ff4d4f;
+      border-color: #ffccc7;
+    }
+  }
+
+  // 加载状态
+  .loading-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    color: #909399;
+
+    .loading-text {
+      margin-left: 8px;
+    }
+  }
+
+  // 空状态
+  .empty-container {
+    text-align: center;
+    padding: 40px;
+    color: #909399;
+
+    .empty-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+
+    .empty-text {
+      font-size: 14px;
+    }
+  }
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  .role-management {
+    padding: 12px;
+
+    .search-section {
+      padding: 16px;
+    }
+
+    .action-section {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .table-section {
+      .table-actions {
+        flex-direction: column;
+        gap: 4px;
+
+        .el-button {
+          width: 100%;
+        }
+      }
+    }
+
+    .role-dialog {
+      .el-form {
+        padding: 16px 20px;
+      }
+
+      .dialog-footer {
+        padding: 16px 20px;
+      }
+    }
+  }
+}
+
+// 深色主题适配
+.dark {
+  .role-management {
+    .search-section,
+    .table-section {
+      background: #1d1e1f;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .permission-dialog {
+      .permission-header {
+        background: #2a2a2a;
+      }
+
+      .permission-content {
+        border-color: #414243;
+        background: #1d1e1f;
+      }
+    }
+
+    .status-tag {
+      &.enabled {
+        background-color: rgba(82, 196, 26, 0.1);
+        border-color: rgba(82, 196, 26, 0.3);
+      }
+
+      &.disabled {
+        background-color: rgba(255, 77, 79, 0.1);
+        border-color: rgba(255, 77, 79, 0.3);
+      }
+    }
+  }
+}

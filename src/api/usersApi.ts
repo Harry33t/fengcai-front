@@ -11,9 +11,17 @@ import {
   refreshTokenRequest 
 } from '@/service/api'
 import type { IAccount, ILoginResult, IUserInfo } from '@/service/login/type'
+import type { IUserPermissionInfo } from '@/types/permission'
 import axios from 'axios'
 import { BASE_URL } from '@/service/request/config'
 import localCache from '@/utils/cache'
+
+// API 响应包装类型
+interface ApiResponse<T> {
+  code: number
+  message: string
+  data: T | null
+}
 
 // 导入 User 命名空间类型
 declare global {
@@ -136,28 +144,7 @@ export class UserService {
     }
   }
 
-  /**
-   * 获取用户信息
-   */
-  static async getUserInfo(): Promise<User.UserInfo> {
-    const response = await requestUserInfo()
-    
-    if (response.data) {
-      // 将 IUserInfo 映射为 User.UserInfo
-      const userInfo: User.UserInfo = {
-        userId: response.data.id,
-        userName: response.data.username,
-        roles: response.data.roles || [],
-        buttons: response.data.permissions || [],
-        avatar: response.data.avatar,
-        email: response.data.email,
-        phone: response.data.email // 临时使用 email 作为 phone
-      }
-      return userInfo
-    }
-    
-    throw new Error('Failed to get user info')
-  }
+
 
   /**
    * 获取用户菜单
@@ -189,6 +176,66 @@ export class UserService {
     }
     
     throw new Error('Failed to refresh token')
+  }
+
+  /**
+   * 获取用户权限信息
+   * 调用 /user/info 接口获取完整的权限菜单树
+   */
+  static async getUserInfo(): Promise<{ code: number; message: string; data: IUserPermissionInfo | null }> {
+    try {
+      const token = localCache.getCache('token')
+      if (!token) {
+        throw new Error('未找到访问令牌')
+      }
+
+      const axiosResponse = await axios.get(`${BASE_URL}/user/info`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+          'Access-Token': token
+        }
+      })
+
+      console.log('[UserService] 获取用户信息响应:', axiosResponse.data)
+
+      // 检查响应状态
+      if (axiosResponse.data && axiosResponse.data.code === 0) {
+        return {
+          code: 0,
+          message: '获取成功',
+          data: axiosResponse.data.data
+        }
+      } else {
+        const errorMessage = axiosResponse.data?.message || '获取用户信息失败'
+        console.error('[UserService] 获取用户信息失败:', axiosResponse.data)
+        return {
+          code: axiosResponse.data?.code || -1,
+          message: errorMessage,
+          data: null
+        }
+      }
+    } catch (error) {
+      console.error('[UserService] 获取用户信息错误:', error)
+      
+      if (axios.isAxiosError(error)) {
+        const response = error.response
+        if (response) {
+          const errorMessage = response.data?.message || `HTTP ${response.status}: ${response.statusText}`
+          return {
+            code: response.status,
+            message: errorMessage,
+            data: null
+          }
+        }
+      }
+      
+      return {
+        code: -1,
+        message: error instanceof Error ? error.message : '获取用户信息失败',
+        data: null
+      }
+    }
   }
 
   /**

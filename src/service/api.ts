@@ -39,6 +39,26 @@ export {
   getMenuListRequest
 } from './main/main'
 
+// 导出角色和权限管理 API
+export {
+  // 角色管理
+  getRoleListRequest,
+  createRoleRequest,
+  getRoleDetailRequest,
+  updateRoleRequest,
+  deleteRoleRequest,
+  
+  // 角色权限管理
+  getRolePermissionsRequest,
+  updateRolePermissionsRequest,
+  
+  // 按钮权限管理
+  createButtonAuthRequest,
+  updateButtonAuthRequest,
+  getButtonAuthListRequest,
+  deleteButtonAuthRequest
+} from './role/role'
+
 // 导出类型定义
 export type {
   // 通用类型
@@ -66,6 +86,18 @@ export type {
   ICreateMenuParams,
   IUpdateMenuParams
 } from './main/type'
+
+export type {
+  // 角色和权限管理类型
+  IRole,
+  ICreateRoleParams,
+  IUpdateRoleParams,
+  IRolePermissions,
+  IButtonAuth,
+  ICreateButtonAuthParams,
+  IUpdateButtonAuthParams,
+  IRoleListParams
+} from './role/type'
 
 // 导出请求实例
 export { default as hyRequest } from './index'

@@ -48,6 +48,20 @@
 
       .right {
         .user {
+          .user-info {
+            .cover {
+              width: 26px;
+              height: 26px;
+              margin-right: 6px;
+            }
+            
+            .user-name {
+              font-size: 12px;
+              max-width: 80px;
+            }
+          }
+          
+          // 兼容旧样式
           .cover {
             width: 26px;
             height: 26px;

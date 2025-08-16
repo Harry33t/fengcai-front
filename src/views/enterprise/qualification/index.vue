@@ -26,116 +26,104 @@
   </div>
 </template>
 
+                :prop="column.prop"
+                :label="column.label"
+                :width="column.width"
+                :fixed="column.fixed"
+                :show-overflow-tooltip="column.showOverflowTooltip"
+              >
+                <template v-if="column.prop === 'actions'" #default="{ row }">
+                  <div class="action-buttons">
+                    <ElButton 
+                      type="primary" 
+                      size="small" 
+                      @click="handleEditQualification(row)"
+                    >
+                      编辑
+                    </ElButton>
+                    <ElButton 
+                      type="danger" 
+                      size="small" 
+                      @click="handleDeleteQualification(row)"
+                    >
+                      删除
+                    </ElButton>
+                  </div>
+                </template>
+              </ElTableColumn>
+            </ElTable>
+
+            <!-- 分页 -->
+            <div class="pagination-wrapper">
+              <ElPagination 
+                :current-page="pagination.currentPage"
+                :page-size="pagination.pageSize"
+                :total="pagination.total"
+                :page-sizes="[10, 20, 50, 100]"
+                layout="total, sizes, prev, pager, next, jumper"
+                @current-change="handlePageChange"
+                @size-change="handleSizeChange"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- 其他标签页占位内容 -->
+        <div v-else class="tab-placeholder">
+          <div class="placeholder-content">
+            <i class="iconsys-tools placeholder-icon"></i>
+            <h3>{{ tab.label }}功能开发中</h3>
+            <p>该功能正在开发中，敬请期待...</p>
+          </div>
+        </div>
+      </ElTabPane>
+    </ElTabs>
+  </div>
+</template>
+
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { ElButton } from 'element-plus'
+import { onMounted } from 'vue'
+import {
+  ElTabs,
+  ElTabPane,
+  ElForm,
+  ElFormItem,
+  ElRow,
+  ElCol,
+  ElSelect,
+  ElOption,
+  ElButton,
+  ElTable,
+  ElTableColumn,
+  ElPagination
+} from 'element-plus'
+import { tabsConfig, searchFormConfig, tableColumnsConfig } from './config'
+import { useQualificationPage } from './hooks'
 
-const route = useRoute()
-const router = useRouter()
-const currentTime = ref('')
+// 使用组合式函数
+const {
+  activeTab,
+  searchForm,
+  loading,
+  pagination,
+  currentPageData,
+  handleTabChange,
+  handleSearch,
+  handleReset,
+  handleAddQualification,
+  handleEditQualification,
+  handleDeleteQualification,
+  handlePageChange,
+  handleSizeChange,
+  initData
+} = useQualificationPage()
 
-const currentPageTitle = computed(() => {
-  return route.meta?.title || '未知页面'
-})
-
-const updateTime = () => {
-  const now = new Date()
-  currentTime.value = now.toLocaleString('zh-CN', {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit'
-  })
-}
-
-const goBack = () => {
-  if (window.history.length > 1) {
-    router.go(-1)
-  } else {
-    router.push('/workspace')
-  }
-}
-
+// 页面初始化
 onMounted(() => {
-  updateTime()
-  setInterval(updateTime, 1000)
+  initData()
 })
 </script>
 
-<style scoped>
-.under-development {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  padding: 20px;
-}
-
-.development-container {
-  text-align: center;
-  background: var(--art-main-bg-color, #ffffff);
-  padding: 60px 40px;
-  border-radius: 16px;
-  box-shadow: var(--art-box-shadow, 0 8px 32px rgba(0, 0, 0, 0.1));
-  max-width: 500px;
-  width: 100%;
-}
-
-.icon-wrapper {
-  margin-bottom: 24px;
-}
-
-.development-icon {
-  font-size: 64px;
-  color: var(--art-primary-color, #409eff);
-  opacity: 0.8;
-}
-
-.development-title {
-  font-size: 32px;
-  font-weight: 600;
-  color: var(--art-text-color-primary, #303133);
-  margin: 0 0 16px 0;
-}
-
-.development-description {
-  font-size: 16px;
-  color: var(--art-text-color-regular, #606266);
-  margin: 0 0 32px 0;
-  line-height: 1.6;
-}
-
-.development-info {
-  background: var(--art-bg-color-page, #f5f7fa);
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 32px;
-}
-
-.info-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
-}
-
-.info-item:last-child {
-  margin-bottom: 0;
-}
-
-.info-label {
-  font-size: 14px;
-  color: var(--art-text-color-regular, #606266);
-  font-weight: 500;
-}
-
-.info-value {
-  font-size: 14px;
-  color: var(--art-text-color-primary, #303133);
-  font-weight: 600;
-}
+<style lang="scss" scoped>
+@import './index.scss';
 </style>

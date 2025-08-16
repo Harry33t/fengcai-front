@@ -10,7 +10,7 @@
       </ElCol>
       <ElCol :xs="24" :sm="12" :md="12">
         <ArtBasicBanner
-          title="欢迎使用 Art Design Pro"
+          title="欢迎使用管理系统"
           subtitle="基于 Vue 3 + TypeScript + Element Plus 构建的现代化管理系统。"
           titleColor="#333"
           subtitleColor="#666"

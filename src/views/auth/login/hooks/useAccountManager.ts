@@ -2,7 +2,6 @@
  * 账户管理相关逻辑
  */
 import { computed, reactive } from 'vue'
-import { useI18n } from 'vue-i18n'
 import { accountsConfig, loginFormConfig } from '../config'
 
 export type AccountKey = 'super' | 'admin' | 'user'
@@ -16,7 +15,6 @@ export interface Account {
 }
 
 export function useAccountManager() {
-  const { t } = useI18n()
 
   // 使用配置文件中的账户列表，支持国际化
   const accounts = computed<Account[]>(() => [

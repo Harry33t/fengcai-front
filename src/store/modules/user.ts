@@ -95,10 +95,21 @@ export const useUserStore = defineStore(
      * @param newAccessToken 访问令牌
      * @param newRefreshToken 刷新令牌（可选）
      */
-    const setToken = (newAccessToken: string, newRefreshToken?: string) => {
+    const setToken = async (newAccessToken: string, newRefreshToken?: string) => {
       accessToken.value = newAccessToken
       if (newRefreshToken) {
         refreshToken.value = newRefreshToken
+      }
+      
+      // 同时存储到localCache中，供请求拦截器使用
+      try {
+        const { default: localCache } = await import('@/utils/cache')
+        localCache.setCache('token', newAccessToken)
+        if (newRefreshToken) {
+          localCache.setCache('refreshToken', newRefreshToken)
+        }
+      } catch (error) {
+        console.warn('存储token到localCache失败:', error)
       }
     }
 

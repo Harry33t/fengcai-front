@@ -4,12 +4,12 @@
 
     <div class="right-wrap">
       <div class="top-right-wrap">
-        <div class="btn theme-btn" @click="toggleTheme">
+        <div class="btn theme-btn" @click="toggleTheme" style="display: none;">
           <i class="iconfont-sys">
             {{ isDark ? '&#xe6b5;' : '&#xe725;' }}
           </i>
         </div>
-        <ElDropdown @command="changeLanguage" popper-class="langDropDownStyle">
+        <ElDropdown @command="changeLanguage" popper-class="langDropDownStyle" style="display: none;">
           <div class="btn language-btn">
             <i class="iconfont-sys icon-language">&#xe611;</i>
           </div>
@@ -239,7 +239,7 @@
       }
 
       // 存储token和用户信息
-      userStore.setToken(token, refreshToken)
+      await userStore.setToken(token, refreshToken)
       const userInfo = await UserService.getUserInfo()
       userStore.setUserInfo(userInfo)
       userStore.setLoginStatus(true)

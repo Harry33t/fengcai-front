@@ -1,279 +1,389 @@
-<!-- 用户管理 -->
-<!-- art-full-height 自动计算出页面剩余高度 -->
-<!-- art-table-card 一个符合系统样式的 class，同时自动撑满剩余高度 -->
-<!-- 如果你想使用 template 语法，请移步功能示例下面的高级表格示例 -->
 <template>
-  <div class="user-page art-full-height">
-    <!-- 搜索栏 -->
-    <UserSearch v-model:filter="defaultFilter" @reset="resetSearch" @search="handleSearch" />
-
-    <ElCard class="art-table-card" shadow="never">
-      <!-- 表格头部 -->
-      <ArtTableHeader v-model:columns="columnChecks" @refresh="refreshAll">
-        <template #left>
-          <ElButton @click="showDialog('add')">新增用户</ElButton>
-        </template>
-      </ArtTableHeader>
-
-      <!-- 表格 -->
-      <ArtTable
-        :loading="isLoading"
-        :data="tableData"
-        :columns="columns"
-        :pagination="paginationState"
-        @selection-change="handleSelectionChange"
-        @pagination:size-change="onPageSizeChange"
-        @pagination:current-change="onCurrentPageChange"
+  <div class="user-management">
+    <!-- 搜索区域 -->
+    <div class="search-section">
+      <el-form
+        ref="searchFormRef"
+        :model="queryParams"
+        :rules="searchFormRules"
+        class="search-form"
+        :inline="true"
+        label-width="80px"
       >
-      </ArtTable>
+        <el-form-item label="用户名" prop="username">
+          <el-input
+            v-model="queryParams.username"
+            placeholder="请输入用户名"
+            clearable
+            @keyup.enter="handleSearch"
+          />
+        </el-form-item>
+        <el-form-item label="姓名" prop="name">
+          <el-input
+            v-model="queryParams.name"
+            placeholder="请输入姓名"
+            clearable
+            @keyup.enter="handleSearch"
+          />
+        </el-form-item>
+        <el-form-item label="状态" prop="status">
+          <el-select v-model="queryParams.status" placeholder="请选择状态" clearable>
+            <el-option
+              v-for="item in statusOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            />
+          </el-select>
+        </el-form-item>
+        <div class="search-buttons">
+          <el-button type="primary" @click="handleSearch">查询</el-button>
+          <el-button @click="handleReset">重置</el-button>
+        </div>
+      </el-form>
+    </div>
 
-      <!-- 用户弹窗 -->
-      <UserDialog
-        v-model:visible="dialogVisible"
-        :type="dialogType"
-        :user-data="currentUserData"
-        @submit="handleDialogSubmit"
+    <!-- 操作区域 -->
+    <div class="action-section">
+      <div class="left-actions">
+        <el-button
+          v-auth="buttonPermissions.create"
+          type="primary"
+          @click="openAddDialog"
+        >
+          <el-icon><Plus /></el-icon>
+          新增用户
+        </el-button>
+      </div>
+      <div class="right-actions">
+        <button class="refresh-btn" @click="refreshData" title="刷新">
+          <el-icon class="icon"><Refresh /></el-icon>
+        </button>
+      </div>
+    </div>
+
+    <!-- 表格区域 -->
+    <div class="table-section">
+      <el-table
+        v-loading="loading"
+        :data="userList"
+        class="user-table"
+        stripe
+        border
+        empty-text="暂无数据"
+      >
+        <el-table-column prop="user.id" label="ID" width="80" sortable />
+        <el-table-column prop="user.username" label="用户名" min-width="120" sortable />
+        <el-table-column prop="user.name" label="姓名" min-width="100" sortable />
+        <el-table-column prop="roleName" label="角色" min-width="120" />
+        <el-table-column prop="user.phone" label="手机号" min-width="130" />
+        <el-table-column prop="user.gender" label="性别" width="80">
+          <template #default="{ row }">
+            <span
+              class="gender-tag"
+              :class="{ male: row.user.gender === 1, female: row.user.gender === 2 }"
+            >
+              {{ formatGender(row.user.gender) }}
+            </span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="user.status" label="状态" width="80">
+          <template #default="{ row }">
+            <el-tag
+              class="status-tag"
+              :class="{ active: row.user.status === 1, inactive: row.user.status === 0 }"
+              :type="row.user.status === 1 ? 'success' : 'danger'"
+              size="small"
+            >
+              {{ formatStatus(row.user.status) }}
+            </el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column prop="manager.name" label="上级管理者" min-width="120">
+          <template #default="{ row }">
+            {{ row.manager?.name || '-' }}
+          </template>
+        </el-table-column>
+        <el-table-column prop="user.createdTime" label="创建时间" min-width="160">
+          <template #default="{ row }">
+            {{ formatTime(row.user.createdTime) }}
+          </template>
+        </el-table-column>
+        
+        <!-- 操作列 -->
+        <el-table-column
+          prop="action"
+          label="操作"
+          width="200"
+          fixed="right"
+        >
+          <template #default="{ row }">
+            <div class="action-buttons">
+              <el-button
+                v-auth="buttonPermissions.edit"
+                type="primary"
+                link
+                size="small"
+                @click="openEditDialog(row.user.id)"
+              >
+                编辑
+              </el-button>
+              <el-button
+                v-auth="buttonPermissions.resetPassword"
+                type="warning"
+                link
+                size="small"
+                @click="handleResetPassword(row)"
+              >
+                重置密码
+              </el-button>
+              <el-button
+                v-auth="buttonPermissions.delete"
+                type="danger"
+                link
+                size="small"
+                @click="handleDelete(row)"
+              >
+                删除
+              </el-button>
+            </div>
+          </template>
+        </el-table-column>
+      </el-table>
+
+      <!-- 空状态 -->
+      <div v-if="isEmpty" class="empty-state">
+        <el-icon class="empty-icon"><UserFilled /></el-icon>
+        <div class="empty-text">暂无用户数据</div>
+        <div class="empty-desc">您可以新增用户来开始管理</div>
+        <el-button
+          v-auth="buttonPermissions.create"
+          type="primary"
+          @click="openAddDialog"
+        >
+          新增用户
+        </el-button>
+      </div>
+    </div>
+
+    <!-- 分页区域 -->
+    <div v-if="hasData" class="pagination-section">
+      <el-pagination
+        v-model:current-page="queryParams.page"
+        v-model:page-size="queryParams.pageSize"
+        :total="total"
+        :page-sizes="paginationConfig.pageSizes"
+        :layout="paginationConfig.layout"
+        background
+        @size-change="handleSizeChange"
+        @current-change="handlePageChange"
       />
-    </ElCard>
+    </div>
+
+    <!-- 用户表单对话框 -->
+    <el-dialog
+      v-model="dialogVisible"
+      :title="dialogTitle"
+      width="600px"
+      class="user-dialog"
+      destroy-on-close
+      @close="closeDialog"
+    >
+      <el-form
+        ref="formRef"
+        :model="formData"
+        :rules="formRules"
+        class="user-form"
+        label-width="100px"
+      >
+        <el-form-item label="用户名" prop="username">
+          <el-input
+            v-model="formData.username"
+            placeholder="请输入用户名"
+            :disabled="isEdit"
+            maxlength="20"
+            show-word-limit
+          />
+        </el-form-item>
+        
+        <el-form-item v-if="!isEdit" label="密码" prop="password" class="password-item">
+          <el-input
+            v-model="formData.password"
+            type="password"
+            placeholder="请输入密码"
+            maxlength="20"
+            show-word-limit
+            show-password
+          />
+        </el-form-item>
+        
+        <el-form-item label="姓名" prop="name">
+          <el-input
+            v-model="formData.name"
+            placeholder="请输入姓名"
+            maxlength="10"
+            show-word-limit
+          />
+        </el-form-item>
+        
+        <el-form-item label="手机号" prop="phone">
+          <el-input
+            v-model="formData.phone"
+            placeholder="请输入手机号"
+            maxlength="11"
+          />
+        </el-form-item>
+        
+        <el-form-item label="性别" prop="gender">
+          <el-radio-group v-model="formData.gender" class="radio-group">
+            <el-radio
+              v-for="item in genderOptions"
+              :key="item.value"
+              :label="item.value"
+            >
+              {{ item.label }}
+            </el-radio>
+          </el-radio-group>
+        </el-form-item>
+        
+        <el-form-item label="状态" prop="status">
+          <el-radio-group v-model="formData.status" class="radio-group">
+            <el-radio
+              v-for="item in statusOptions"
+              :key="item.value"
+              :label="item.value"
+            >
+              {{ item.label }}
+            </el-radio>
+          </el-radio-group>
+        </el-form-item>
+        
+        <el-form-item label="角色" prop="roleId">
+          <el-select v-model="formData.roleId" placeholder="请选择角色">
+            <el-option
+              v-for="item in roleOptions"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            >
+              <span>{{ item.label }}</span>
+              <span style="float: right; color: #999; font-size: 12px;">
+                {{ item.desc }}
+              </span>
+            </el-option>
+          </el-select>
+        </el-form-item>
+      </el-form>
+
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button @click="closeDialog">取消</el-button>
+          <el-button
+            type="primary"
+            :loading="loading"
+            @click="handleFormSubmit"
+          >
+            {{ submitButtonText }}
+          </el-button>
+        </div>
+      </template>
+    </el-dialog>
   </div>
 </template>
 
 <script setup lang="ts">
-  import ArtButtonTable from '@/components/core/forms/art-button-table/index.vue'
-  import { ACCOUNT_TABLE_DATA } from '@/mock/temp/formData'
-  import { ElMessageBox, ElMessage, ElTag } from 'element-plus'
-  import { useTable } from '@/composables/useTable'
-  import { UserService } from '@/api/usersApi'
-  import UserSearch from './modules/user-search.vue'
-  import UserDialog from './modules/user-dialog.vue'
+import { ref, onMounted } from 'vue'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import { Plus, Refresh, UserFilled } from '@element-plus/icons-vue'
+import { useUserData, useUserForm } from './hooks'
+import { userTableColumns, searchFormRules, paginationConfig, buttonPermissions } from './config'
+import { statusOptions, genderOptions } from './config'
+import { resetUserPassword } from '@/api/userApi'
 
-  defineOptions({ name: 'User' })
+defineOptions({ name: 'SystemUser' })
 
-  type UserListItem = Api.User.UserListItem
-  const { width } = useWindowSize()
-  const { getUserList } = UserService
+// 数据管理
+const {
+  loading,
+  userList,
+  total,
+  queryParams,
+  hasData,
+  isEmpty,
+  fetchUserList,
+  refreshData,
+  handleSearch,
+  handleReset,
+  handlePageChange,
+  handleSizeChange,
+  handleDelete,
+  formatGender,
+  formatStatus,
+  formatTime
+} = useUserData()
 
-  // 弹窗相关
-  const dialogType = ref<Form.DialogType>('add')
-  const dialogVisible = ref(false)
-  const currentUserData = ref<Partial<UserListItem>>({})
+// 表单管理
+const {
+  formRef,
+  formData,
+  formRules,
+  dialogVisible,
+  isEdit,
+  roleOptions,
+  dialogTitle,
+  submitButtonText,
+  openAddDialog,
+  openEditDialog,
+  closeDialog,
+  resetForm,
+  handleSubmit
+} = useUserForm()
 
-  // 选中行
-  const selectedRows = ref<UserListItem[]>([])
+// 搜索表单引用
+const searchFormRef = ref()
 
-  // 表单搜索初始值
-  const defaultFilter = ref({
-    name: undefined,
-    level: 'normal',
-    date: '2025-01-05',
-    daterange: ['2025-01-01', '2025-02-10'],
-    status: '1'
-  })
-
-  // 用户状态配置
-  const USER_STATUS_CONFIG = {
-    '1': { type: 'success' as const, text: '在线' },
-    '2': { type: 'info' as const, text: '离线' },
-    '3': { type: 'warning' as const, text: '异常' },
-    '4': { type: 'danger' as const, text: '注销' }
-  } as const
-
-  /**
-   * 获取用户状态配置
-   */
-  const getUserStatusConfig = (status: string) => {
-    return (
-      USER_STATUS_CONFIG[status as keyof typeof USER_STATUS_CONFIG] || {
-        type: 'info' as const,
-        text: '未知'
+// 重置密码
+const handleResetPassword = async (row: any) => {
+  try {
+    const { value: newPassword } = await ElMessageBox.prompt(
+      '请输入新密码',
+      `重置用户 "${row.user.name}" 的密码`,
+      {
+        inputPattern: /^.{6,20}$/,
+        inputErrorMessage: '密码长度为 6 到 20 个字符',
+        inputType: 'password'
       }
     )
-  }
 
-  const {
-    columns,
-    columnChecks,
-    tableData,
-    isLoading,
-    paginationState,
-    searchData,
-    searchState,
-    resetSearch,
-    onPageSizeChange,
-    onCurrentPageChange,
-    refreshAll
-  } = useTable<UserListItem>({
-    // 核心配置
-    core: {
-      apiFn: getUserList,
-      apiParams: {
-        current: 1,
-        size: 20,
-        ...defaultFilter.value
-        // pageNum: 1,
-        // pageSize: 20
-      },
-      // 自定义分页字段映射，同时需要在 apiParams 中配置字段名
-      // paginationKey: {
-      //   current: 'pageNum',
-      //   size: 'pageSize'
-      // },
-      columnsFactory: () => [
-        { type: 'selection' }, // 勾选列
-        { type: 'index', width: 60, label: '序号' }, // 序号
-        {
-          prop: 'avatar',
-          label: '用户名',
-          minWidth: width.value < 500 ? 220 : '',
-          formatter: (row) => {
-            return h('div', { class: 'user', style: 'display: flex; align-items: center' }, [
-              h('img', { class: 'avatar', src: row.avatar }),
-              h('div', {}, [
-                h('p', { class: 'user-name' }, row.userName),
-                h('p', { class: 'email' }, row.userEmail)
-              ])
-            ])
-          }
-        },
-        {
-          prop: 'userGender',
-          label: '性别',
-          sortable: true,
-          // checked: false, // 隐藏列
-          formatter: (row) => row.userGender
-        },
-        { prop: 'userPhone', label: '手机号' },
-        {
-          prop: 'status',
-          label: '状态',
-          formatter: (row) => {
-            const statusConfig = getUserStatusConfig(row.status)
-            return h(ElTag, { type: statusConfig.type }, () => statusConfig.text)
-          }
-        },
-        {
-          prop: 'createTime',
-          label: '创建日期',
-          sortable: true
-        },
-        {
-          prop: 'operation',
-          label: '操作',
-          width: 120,
-          fixed: 'right', // 固定列
-          formatter: (row) =>
-            h('div', [
-              h(ArtButtonTable, {
-                type: 'edit',
-                onClick: () => showDialog('edit', row)
-              }),
-              h(ArtButtonTable, {
-                type: 'delete',
-                onClick: () => deleteUser(row)
-              })
-            ])
-        }
-      ]
-    },
-    // 数据处理
-    transform: {
-      // 数据转换器 - 替换头像
-      dataTransformer: (records: any) => {
-        // 类型守卫检查
-        if (!Array.isArray(records)) {
-          console.warn('数据转换器: 期望数组类型，实际收到:', typeof records)
-          return []
-        }
-
-        // 使用本地头像替换接口返回的头像
-        return records.map((item: any, index: number) => {
-          return {
-            ...item,
-            avatar: ACCOUNT_TABLE_DATA[index % ACCOUNT_TABLE_DATA.length].avatar
-          }
-        })
-      }
+    const { data } = await resetUserPassword(row.user.id, newPassword)
+    
+    if (data.code === 0) {
+      ElMessage.success('密码重置成功')
+    } else {
+      ElMessage.error(data.message || '密码重置失败')
     }
-  })
-
-  /**
-   * 搜索处理
-   * @param params 参数
-   */
-  const handleSearch = (params: Record<string, any>) => {
-    // 处理日期区间参数，把 daterange 转换为 startTime 和 endTime
-    const { daterange, ...searchParams } = params
-    const [startTime, endTime] = Array.isArray(daterange) ? daterange : [null, null]
-
-    // 搜索参数赋值
-    Object.assign(searchState, { ...searchParams, startTime, endTime })
-    searchData()
-  }
-
-  /**
-   * 显示用户弹窗
-   */
-  const showDialog = (type: Form.DialogType, row?: UserListItem): void => {
-    console.log('打开弹窗:', { type, row })
-    dialogType.value = type
-    currentUserData.value = row || {}
-    nextTick(() => {
-      dialogVisible.value = true
-    })
-  }
-
-  /**
-   * 删除用户
-   */
-  const deleteUser = (row: UserListItem): void => {
-    console.log('删除用户:', row)
-    ElMessageBox.confirm(`确定要注销该用户吗？`, '注销用户', {
-      confirmButtonText: '确定',
-      cancelButtonText: '取消',
-      type: 'error'
-    }).then(() => {
-      ElMessage.success('注销成功')
-    })
-  }
-
-  /**
-   * 处理弹窗提交事件
-   */
-  const handleDialogSubmit = async () => {
-    try {
-      dialogVisible.value = false
-      currentUserData.value = {}
-    } catch (error) {
-      console.error('提交失败:', error)
+  } catch (error) {
+    if (error !== 'cancel') {
+      console.error('重置密码失败:', error)
+      ElMessage.error('密码重置失败')
     }
   }
+}
 
-  /**
-   * 处理表格行选择变化
-   */
-  const handleSelectionChange = (selection: UserListItem[]): void => {
-    selectedRows.value = selection
-    console.log('选中行数据:', selectedRows.value)
+// 表单提交成功后刷新数据
+const handleFormSubmit = async () => {
+  const success = await handleSubmit()
+  if (success) {
+    await fetchUserList()
   }
+}
+
+// 页面初始化
+onMounted(() => {
+  fetchUserList()
+})
 </script>
 
 <style lang="scss" scoped>
-  .user-page {
-    :deep(.user) {
-      .avatar {
-        width: 40px;
-        height: 40px;
-        border-radius: 6px;
-      }
-
-      > div {
-        margin-left: 10px;
-
-        .user-name {
-          font-weight: 500;
-          color: var(--art-text-gray-800);
-        }
-      }
-    }
-  }
+@import './index.scss';
 </style>

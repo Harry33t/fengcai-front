@@ -1,0 +1,348 @@
+// 用户管理页面样式
+.user-management {
+  padding: 20px;
+  background: var(--art-main-bg-color);
+  border-radius: 8px;
+
+  // 搜索区域
+  .search-section {
+    margin-bottom: 20px;
+    padding: 20px;
+    background: var(--art-white-color);
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+    .search-form {
+      .el-form-item {
+        margin-bottom: 16px;
+      }
+
+      .search-buttons {
+        display: flex;
+        gap: 12px;
+        margin-top: 20px;
+
+        .el-button {
+          padding: 8px 16px;
+        }
+      }
+    }
+  }
+
+  // 操作区域
+  .action-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+
+    .left-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .right-actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+
+      .refresh-btn {
+        padding: 8px;
+        border: none;
+        background: none;
+        color: var(--art-text-color-3);
+        cursor: pointer;
+        border-radius: 4px;
+        transition: all 0.2s;
+
+        &:hover {
+          background: var(--art-gray-100);
+          color: var(--art-primary-color);
+        }
+
+        .icon {
+          font-size: 16px;
+        }
+      }
+    }
+  }
+
+  // 表格区域
+  .table-section {
+    background: var(--art-white-color);
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+    .user-table {
+      .el-table__header-wrapper {
+        .el-table__header {
+          th {
+            background: var(--art-gray-50);
+            font-weight: 600;
+            color: var(--art-text-color-1);
+          }
+        }
+      }
+
+      .el-table__body-wrapper {
+        .el-table__row {
+          &:hover {
+            background: var(--art-gray-50);
+          }
+        }
+      }
+
+      // 状态标签
+      .status-tag {
+        &.active {
+          color: var(--art-success-color);
+          background: var(--art-success-color-light);
+          border: 1px solid var(--art-success-color-lighter);
+        }
+
+        &.inactive {
+          color: var(--art-danger-color);
+          background: var(--art-danger-color-light);
+          border: 1px solid var(--art-danger-color-lighter);
+        }
+      }
+
+      // 性别标签
+      .gender-tag {
+        padding: 2px 8px;
+        border-radius: 12px;
+        font-size: 12px;
+        
+        &.male {
+          color: var(--art-primary-color);
+          background: var(--art-primary-color-light);
+        }
+
+        &.female {
+          color: var(--art-warning-color);
+          background: var(--art-warning-color-light);
+        }
+      }
+
+      // 操作按钮
+      .action-buttons {
+        display: flex;
+        gap: 8px;
+
+        .el-button {
+          padding: 4px 8px;
+          font-size: 12px;
+
+          &.is-link {
+            padding: 4px 0;
+          }
+        }
+      }
+    }
+  }
+
+  // 分页区域
+  .pagination-section {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    padding: 16px 0;
+  }
+
+  // 空状态
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 20px;
+    color: var(--art-text-color-3);
+
+    .empty-icon {
+      font-size: 64px;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    .empty-text {
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .empty-desc {
+      font-size: 14px;
+      margin-bottom: 24px;
+    }
+  }
+}
+
+// 用户表单对话框
+.user-dialog {
+  .el-dialog__header {
+    padding: 20px 24px 16px;
+    border-bottom: 1px solid var(--art-border-color);
+
+    .el-dialog__title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--art-text-color-1);
+    }
+  }
+
+  .el-dialog__body {
+    padding: 24px;
+
+    .user-form {
+      .el-form-item {
+        margin-bottom: 20px;
+
+        .el-form-item__label {
+          font-weight: 500;
+          color: var(--art-text-color-2);
+        }
+
+        .el-input,
+        .el-select {
+          width: 100%;
+        }
+
+        // 密码输入框特殊样式
+        &.password-item {
+          .el-input__wrapper {
+            position: relative;
+          }
+        }
+      }
+
+      // 性别和状态选择器
+      .radio-group {
+        .el-radio {
+          margin-right: 24px;
+          
+          .el-radio__label {
+            padding-left: 8px;
+          }
+        }
+      }
+    }
+  }
+
+  .el-dialog__footer {
+    padding: 16px 24px 24px;
+    border-top: 1px solid var(--art-border-color);
+    text-align: right;
+
+    .el-button {
+      min-width: 80px;
+    }
+  }
+}
+
+// 加载状态
+.loading-overlay {
+  position: relative;
+  min-height: 200px;
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  .user-management {
+    padding: 16px;
+
+    .search-section {
+      padding: 16px;
+
+      .search-form {
+        .el-form-item {
+          margin-bottom: 12px;
+        }
+
+        .search-buttons {
+          margin-top: 16px;
+        }
+      }
+    }
+
+    .action-section {
+      flex-direction: column;
+      gap: 12px;
+      align-items: stretch;
+
+      .left-actions,
+      .right-actions {
+        justify-content: center;
+      }
+    }
+
+    .table-section {
+      overflow-x: auto;
+
+      .user-table {
+        min-width: 800px;
+      }
+    }
+
+    .pagination-section {
+      justify-content: center;
+    }
+  }
+
+  .user-dialog {
+    .el-dialog {
+      width: 90% !important;
+      margin: 5vh auto;
+    }
+
+    .el-dialog__body {
+      padding: 20px 16px;
+    }
+  }
+}
+
+// 暗色主题适配
+.dark {
+  .user-management {
+    .search-section,
+    .table-section {
+      background: var(--art-gray-800);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    }
+
+    .table-section {
+      .user-table {
+        .el-table__header-wrapper {
+          .el-table__header {
+            th {
+              background: var(--art-gray-700);
+              color: var(--art-text-color-1);
+            }
+          }
+        }
+
+        .el-table__body-wrapper {
+          .el-table__row {
+            &:hover {
+              background: var(--art-gray-700);
+            }
+          }
+        }
+      }
+    }
+
+    .refresh-btn {
+      &:hover {
+        background: var(--art-gray-700);
+      }
+    }
+  }
+
+  .user-dialog {
+    .el-dialog__header {
+      border-bottom-color: var(--art-gray-600);
+    }
+
+    .el-dialog__footer {
+      border-top-color: var(--art-gray-600);
+    }
+  }
+}

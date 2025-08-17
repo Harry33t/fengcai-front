@@ -1,15 +1,20 @@
 import { ref } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import { deleteEnterpriseRequest } from '@/service/api'
 
 /**
  * 企业管理操作管理 Hook
  */
-export function useEnterpriseActions() {
+export function useEnterpriseActions(emit?: any, onEdit?: (row: any) => void, onView?: (row: any) => void) {
   // 编辑企业
   const handleEdit = (row: any) => {
-    ElMessage.info(`编辑企业：${row.enterpriseName}`)
-    // TODO: 实现编辑逻辑
-    console.log('编辑企业:', row)
+    // 调用父组件的编辑函数打开编辑弹框
+    if (onEdit) {
+      onEdit(row)
+    } else {
+      ElMessage.info(`编辑企业：${row.enterpriseName}`)
+      console.log('编辑企业:', row)
+    }
   }
 
   // 删除企业
@@ -25,19 +30,37 @@ export function useEnterpriseActions() {
         }
       )
       
-      ElMessage.success('删除成功')
-      // TODO: 实现删除逻辑
-      console.log('删除企业:', row)
-    } catch {
-      ElMessage.info('已取消删除')
+      // 调用删除接口
+      const response = await deleteEnterpriseRequest(row.id)
+      
+      if (response.code === 0) {
+        ElMessage.success('删除成功')
+        // 触发父组件刷新列表
+        emit?.refresh?.()
+      } else {
+        ElMessage.error(response.message || '删除失败')
+      }
+    } catch (error: any) {
+      // 如果是用户取消操作
+      if (error === 'cancel') {
+        ElMessage.info('已取消删除')
+      } else {
+        // 如果是API调用错误
+        console.error('删除企业失败:', error)
+        ElMessage.error(error?.message || '删除失败，请重试')
+      }
     }
   }
 
   // 查看企业详情
   const handleView = (row: any) => {
-    ElMessage.info(`查看企业详情：${row.enterpriseName}`)
-    // TODO: 实现查看逻辑
-    console.log('查看企业:', row)
+    // 调用父组件的查看函数打开查看弹框
+    if (onView) {
+      onView(row)
+    } else {
+      ElMessage.info(`查看企业详情：${row.enterpriseName}`)
+      console.log('查看企业:', row)
+    }
   }
 
   // 新增企业

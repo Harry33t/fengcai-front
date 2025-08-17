@@ -2,7 +2,7 @@
   <div class="page-content">
     <!-- 基础用法 -->
     <ArtTextScroll
-      text="丰彩管理系统 <a target='_blank' href='https://www.lingchen.kim/art-design-pro/docs/'>点击我 </a>访问官方文档"
+      text="丰彩企业管理系统 <a target='_blank' href='https://www.lingchen.kim/art-design-pro/docs/'>点击我 </a>访问官方文档"
       showClose
     />
 

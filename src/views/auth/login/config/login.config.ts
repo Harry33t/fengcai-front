@@ -69,7 +69,7 @@ export const accountsConfig = [
  */
 export const loginTextConfig = {
   title: '登录',
-  subTitle: '欢迎使用丰彩管理系统',
+  subTitle: '欢迎使用丰彩企业管理系统',
   btnText: '登录',
   rememberText: '记住密码',
   success: {

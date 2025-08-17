@@ -105,62 +105,8 @@ export const tableColumnsConfig = [
   }
 ]
 
-// 模拟表格数据
-export const mockTableData = [
-  {
-    id: 1,
-    enterpriseType: '建筑业企业资质',
-    enterpriseName: '南京丰宇',
-    contactPerson: '张经理',
-    contactPhone: '11111',
-    safetyPermit: '有',
-    creditManual: '有',
-    customerAttribution: '李四'
-  },
-  {
-    id: 2,
-    enterpriseType: '建筑业企业资质',
-    enterpriseName: '南京兴奇电力安装工程有限公司',
-    contactPerson: '李经理',
-    contactPhone: '22222',
-    safetyPermit: '无',
-    creditManual: '无',
-    customerAttribution: '张三'
-  },
-  {
-    id: 3,
-    enterpriseType: '建筑业企业资质',
-    enterpriseName: '南京福根脚手架有限公司',
-    contactPerson: '王经理',
-    contactPhone: '33333',
-    safetyPermit: 'yes',
-    creditManual: 'no',
-    customerAttribution: '王五',
-    qualificationStatus: 'normal'
-  },
-  {
-    id: 4,
-    enterpriseType: '建筑业企业资质',
-    enterpriseName: '南京福根脚手架有限公司',
-    contactPerson: '赵经理',
-    contactPhone: '44444',
-    safetyPermit: 'no',
-    creditManual: 'no',
-    customerAttribution: '李四',
-    qualificationStatus: 'expired'
-  },
-  {
-    id: 5,
-    enterpriseType: '建筑业企业资质',
-    enterpriseName: '南京富纺机械化施工有限公司',
-    contactPerson: '刘经理',
-    contactPhone: '55555',
-    safetyPermit: 'no',
-    creditManual: 'no',
-    customerAttribution: '张三',
-    qualificationStatus: 'normal'
-  }
-]
+// 模拟表格数据 - 已清空，使用真实API数据
+export const mockTableData: any[] = []
 
 // 分页配置
 export const paginationConfig = {

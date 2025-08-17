@@ -11,7 +11,7 @@ import { headerBarConfig } from './headerBar'
 const appConfig: SystemConfig = {
   // 系统信息
   systemInfo: {
-    name: '丰彩管理系统' // 系统名称
+    name: '丰彩企业管理系统' // 系统名称
   },
   // Element Plus 主题
   elementPlusTheme: {

@@ -2,19 +2,15 @@
 export interface IEnterprise {
   id: number
   name: string
-  type: string
-  contact_person: string
-  contact_phone: string
+  socialCreditCode?: string
   address?: string
-  registration_number?: string
-  legal_representative?: string
-  business_scope?: string
-  safety_license?: string
-  credit_manual?: string
-  customer_attribution?: string
-  status: number
-  created_at: number
-  updated_at: number
+  contactPerson: string
+  contactPhone: string
+  customerType?: string
+  companyTypes?: string[]
+  status?: number
+  created_at?: number
+  updated_at?: number
 }
 
 export interface IEnterpriseListParams {
@@ -30,33 +26,61 @@ export interface IEnterpriseListParams {
 
 export interface ICreateEnterpriseParams {
   name: string
-  type: string
-  contact_person: string
-  contact_phone: string
+  socialCreditCode: string
   address?: string
-  registration_number?: string
-  legal_representative?: string
-  business_scope?: string
-  safety_license?: string
-  credit_manual?: string
-  customer_attribution?: string
-  status?: number
+  contactPerson: string
+  contactPhone: string
+  customerType: string
+  companyTypes: string[]
 }
 
 export interface IUpdateEnterpriseParams {
   id: string
   name?: string
-  type?: string
-  contact_person?: string
-  contact_phone?: string
+  socialCreditCode?: string
   address?: string
-  registration_number?: string
-  legal_representative?: string
-  business_scope?: string
-  safety_license?: string
-  credit_manual?: string
-  customer_attribution?: string
-  status?: number
+  contactPerson?: string
+  contactPhone?: string
+  customerType?: string
+  companyTypes?: string[]
+}
+
+// 企业资质相关类型定义
+export interface ICompanyQualification {
+  id?: number
+  companyId: string
+  qualificationType: string
+  qualificationSeries: string
+  qualificationCategory: string
+  grade: string
+  certificateNumber: string
+  issuingAuthority: string
+  validUntil: number
+  createdAt?: number
+  updatedAt?: number
+}
+
+export interface ICreateCompanyQualificationParams {
+  companyId: string
+  qualificationType: string
+  qualificationSeries: string
+  qualificationCategory: string
+  grade: string
+  certificateNumber: string
+  issuingAuthority: string
+  validUntil: number
+}
+
+export interface IUpdateCompanyQualificationParams {
+  id: number
+  companyId?: string
+  qualificationType?: string
+  qualificationSeries?: string
+  qualificationCategory?: string
+  grade?: string
+  certificateNumber?: string
+  issuingAuthority?: string
+  validUntil?: number
 }
 
 // 用户管理相关类型定义

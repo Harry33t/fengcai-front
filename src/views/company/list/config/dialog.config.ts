@@ -54,16 +54,16 @@ export const basicFormConfig = {
 
 // 企业类型选项
 export const enterpriseTypeOptions = [
-  { label: '建筑业企业资质', value: 'construction' },
-  { label: '工程监理企业资质', value: 'supervision' },
-  { label: '工程设计企业资质', value: 'design' },
-  { label: '工程勘察资质', value: 'survey' }
+  { label: '建筑业企业资质', value: '建筑业企业资质' },
+  { label: '工程监理企业资质', value: '工程监理企业资质' },
+  { label: '工程设计企业资质', value: '工程设计企业资质' },
+  { label: '工程勘察资质', value: '工程勘察资质' }
 ]
 
 // 客户类型选项
 export const customerTypeOptions = [
-  { label: '维护客户', value: 'maintenance' },
-  { label: '业务客户', value: 'business' }
+  { label: '维护客户', value: '维护客户' },
+  { label: '业务客户', value: '业务客户' }
 ]
 
 // 客户归属选项
@@ -176,13 +176,54 @@ export const qualificationConfig = {
   ]
 }
 
+// 安全许可证配置
+export const safetyPermitConfig = {
+  // 发证机关选项
+  issuingAuthorityOptions: [
+    { label: '住房和城乡建设部', value: 'mohurd' },
+    { label: '住房和城乡建设厅', value: 'provincial' },
+    { label: '市级建设部门', value: 'municipal' },
+    { label: '其他', value: 'other' }
+  ]
+}
+
+// 信用手册配置
+export const creditManualConfig = {
+  // 发证机关选项
+  issuingAuthorityOptions: [
+    { label: '住房和城乡建设部', value: 'mohurd' },
+    { label: '住房和城乡建设厅', value: 'provincial' },
+    { label: '市级建设部门', value: 'municipal' },
+    { label: '其他', value: 'other' }
+  ]
+}
+
+// 企业人员配置
+export const personnelConfig = {
+  // 资质类型选项
+  qualificationTypeOptions: [
+    { label: '建造师', value: 'constructor' },
+    { label: '监理工程师', value: 'supervisor' },
+    { label: '造价工程师', value: 'cost_engineer' },
+    { label: '安全工程师', value: 'safety_engineer' },
+    { label: '建筑师', value: 'architect' },
+    { label: '结构工程师', value: 'structural_engineer' },
+    { label: '项目经理', value: 'project_manager' },
+    { label: '技术负责人', value: 'technical_director' },
+    { label: '质量员', value: 'quality_inspector' },
+    { label: '安全员', value: 'safety_officer' },
+    { label: '施工员', value: 'constructor_officer' },
+    { label: '材料员', value: 'material_officer' }
+  ]
+}
+
 // 弹框按钮配置
 export const dialogButtonsConfig = [
   { 
     label: '暂存', 
     type: 'warning' as const, 
     action: 'save',
-    show: ['basic', 'qualification']
+    show: ['basic', 'qualification', 'safety', 'credit', 'personnel']
   },
   { 
     label: '取消', 

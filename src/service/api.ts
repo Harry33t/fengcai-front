@@ -24,6 +24,12 @@ export {
   importEnterprisesRequest,
   exportEnterprisesRequest,
   
+  // 企业资质管理
+  createCompanyQualificationRequest,
+  getCompanyQualificationsRequest,
+  updateCompanyQualificationRequest,
+  deleteCompanyQualificationRequest,
+  
   // 用户管理
   createUserRequest,
   getUserDetailRequest,
@@ -79,6 +85,9 @@ export type {
   IEnterpriseListParams,
   ICreateEnterpriseParams,
   IUpdateEnterpriseParams,
+  ICompanyQualification,
+  ICreateCompanyQualificationParams,
+  IUpdateCompanyQualificationParams,
   IUser,
   IUserListParams,
   ICreateUserParams,

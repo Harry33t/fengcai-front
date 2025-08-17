@@ -5,6 +5,9 @@ import {
   IEnterpriseListParams,
   ICreateEnterpriseParams,
   IUpdateEnterpriseParams,
+  ICompanyQualification,
+  ICreateCompanyQualificationParams,
+  IUpdateCompanyQualificationParams,
   IUser,
   IUserListParams,
   ICreateUserParams,
@@ -16,14 +19,20 @@ import {
 
 enum MainAPI {
   // 企业管理相关
-  CreateEnterprise = '/enterprise',
-  GetEnterpriseDetail = '/enterprise',
-  UpdateEnterprise = '/enterprise',
-  DeleteEnterprise = '/enterprise',
-  GetEnterpriseList = '/enterprises',
-  GetEnterpriseStats = '/enterprise/stats',
-  ImportEnterprises = '/enterprise/import',
-  ExportEnterprises = '/enterprise/export',
+  CreateEnterprise = '/company',
+  GetEnterpriseDetail = '/company',
+  UpdateEnterprise = '/company',
+  DeleteEnterprise = '/company',
+  GetEnterpriseList = '/companies',
+  GetEnterpriseStats = '/company/stats',
+  ImportEnterprises = '/company/import',
+  ExportEnterprises = '/company/export',
+
+  // 企业资质相关
+  CreateCompanyQualification = '/company-qualification',
+  GetCompanyQualifications = '/company-qualifications',
+  UpdateCompanyQualification = '/company-qualification',
+  DeleteCompanyQualification = '/company-qualification',
 
   // 用户管理相关
   CreateUser = '/user',
@@ -71,7 +80,7 @@ export function deleteEnterpriseRequest(id: string) {
 }
 
 export function getEnterpriseListRequest(params: IEnterpriseListParams) {
-  return hyRequest.get<IDataType<{ enterprises: IEnterprise[]; total: number }>>({
+  return hyRequest.get<IDataType<{ companies: IEnterprise[]; total: number }>>({
     url: MainAPI.GetEnterpriseList,
     params
   })
@@ -181,5 +190,35 @@ export function getMenuListRequest(params?: { id?: string; parent_id?: number; l
   return hyRequest.get<IDataType<{ menus: IMenu[]; total: number }>>({
     url: MainAPI.GetMenuList,
     params
+  })
+}
+
+// ==================== 企业资质相关 ====================
+
+export function createCompanyQualificationRequest(params: ICreateCompanyQualificationParams) {
+  return hyRequest.post<IDataType<ICompanyQualification>>({
+    url: MainAPI.CreateCompanyQualification,
+    data: params
+  })
+}
+
+export function getCompanyQualificationsRequest(companyId: string) {
+  return hyRequest.get<IDataType<{ qualifications: ICompanyQualification[]; total: number }>>({
+    url: MainAPI.GetCompanyQualifications,
+    params: { companyId }
+  })
+}
+
+export function updateCompanyQualificationRequest(params: IUpdateCompanyQualificationParams) {
+  return hyRequest.put<IDataType<ICompanyQualification>>({
+    url: MainAPI.UpdateCompanyQualification,
+    data: params
+  })
+}
+
+export function deleteCompanyQualificationRequest(id: number) {
+  return hyRequest.delete<IDataType>({
+    url: MainAPI.DeleteCompanyQualification,
+    params: { id }
   })
 }

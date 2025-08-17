@@ -139,7 +139,8 @@
           stripe
           border
           style="width: 100%"
-          height="500"
+          :height="500"
+          table-layout="auto"
         >
           <ElTableColumn
             type="index"
@@ -152,35 +153,35 @@
           <ElTableColumn
             prop="enterpriseType"
             label="企业类型"
-            width="160"
+            min-width="140"
             show-overflow-tooltip
           />
           
           <ElTableColumn
             prop="enterpriseName"
             label="企业名称"
-            width="200"
+            min-width="180"
             show-overflow-tooltip
           />
           
           <ElTableColumn
             prop="contactPerson"
             label="企业联系人"
-            width="130"
+            min-width="120"
             show-overflow-tooltip
           />
           
           <ElTableColumn
             prop="contactPhone"
             label="联系电话"
-            width="130"
+            min-width="120"
             show-overflow-tooltip
           />
           
           <ElTableColumn
             prop="safetyPermit"
             label="安全许可证"
-            width="100"
+            min-width="120"
             align="center"
           >
             <template #default="{ row }">
@@ -195,7 +196,7 @@
           <ElTableColumn
             prop="creditManual"
             label="信用手册"
-            width="90"
+            min-width="110"
             align="center"
           >
             <template #default="{ row }">
@@ -210,13 +211,13 @@
           <ElTableColumn
             prop="customerAttribution"
             label="客户归属"
-            width="110"
+            min-width="100"
             show-overflow-tooltip
           />
           
           <ElTableColumn
             label="操作"
-            width="200"
+            width="160"
             fixed="right"
             align="center"
           >
@@ -282,8 +283,19 @@ const {
   handlePageChange,
   handleSizeChange,
   formatStatus,
-  getStatusTagType
+  getStatusTagType,
+  loadEnterpriseList
 } = useEnterpriseData()
+
+// 编辑企业
+const handleEdit = (row: any) => {
+  enterpriseDialogRef.value?.openDialog('edit', row)
+}
+
+// 查看企业详情
+const handleView = (row: any) => {
+  enterpriseDialogRef.value?.openDialog('view', row)
+}
 
 const {
   // 配置
@@ -292,21 +304,20 @@ const {
   // 操作方法
   handleAdd: originalHandleAdd,
   handleOperation
-} = useEnterpriseActions()
+} = useEnterpriseActions(
+  { refresh: () => loadEnterpriseList() },
+  handleEdit,
+  handleView
+)
 
 // 重写新增方法，打开弹框
 const handleAdd = () => {
   enterpriseDialogRef.value?.openDialog('add')
 }
 
-// 编辑企业
-const handleEdit = (row: any) => {
-  enterpriseDialogRef.value?.openDialog('edit', row)
-}
-
 // 刷新列表
 const handleRefresh = () => {
-  handleSearch()
+  loadEnterpriseList()
 }
 </script>
 

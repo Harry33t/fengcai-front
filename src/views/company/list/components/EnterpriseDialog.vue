@@ -32,6 +32,7 @@
                       v-model="basicForm.enterpriseName"
                       placeholder="请输入企业名称"
                       clearable
+                      :readonly="isReadonly"
                     />
                   </ElFormItem>
                 </ElCol>
@@ -42,6 +43,7 @@
                       placeholder="请选择企业类型"
                       clearable
                       style="width: 100%"
+                      :disabled="isReadonly"
                     >
                       <ElOption
                         v-for="option in enterpriseTypeOptions"
@@ -61,6 +63,7 @@
                       v-model="basicForm.unifiedSocialCreditCode"
                       placeholder="请输入统一社会信用代码"
                       clearable
+                      :readonly="isReadonly"
                     />
                   </ElFormItem>
                 </ElCol>
@@ -70,6 +73,7 @@
                       v-model="basicForm.legalRepresentative"
                       placeholder="请输入法定代表人"
                       clearable
+                      :readonly="isReadonly"
                     />
                   </ElFormItem>
                 </ElCol>
@@ -153,7 +157,7 @@
         <ElTabPane name="qualification" label="企业资质">
           <div class="qualification-content">
             <!-- 顶部操作区 -->
-            <div class="qualification-header">
+            <div class="qualification-header" v-if="!isReadonly">
               <div class="header-left">
                 <ElButton type="primary" @click="handleAddItem('qualification')">
                   + 新增资质
@@ -181,8 +185,9 @@
                 stripe
                 style="width: 100%"
                 class="qualification-table"
+                table-layout="auto"
               >
-                <ElTableColumn prop="type" label="资质类型" width="150">
+                <ElTableColumn prop="type" label="资质类型" min-width="150">
                   <template #default="{ row }">
                     <ElSelect
                       v-model="row.type"
@@ -201,7 +206,7 @@
                   </template>
                 </ElTableColumn>
                 
-                <ElTableColumn prop="series" label="资质序列" width="150">
+                <ElTableColumn prop="series" label="资质序列" min-width="130">
                   <template #default="{ row }">
                     <ElSelect
                       v-model="row.series"
@@ -221,7 +226,7 @@
                   </template>
                 </ElTableColumn>
                 
-                <ElTableColumn prop="category" label="资质类别" width="120">
+                <ElTableColumn prop="category" label="资质类别" min-width="100">
                   <template #default="{ row }">
                     <ElSelect
                       v-model="row.category"
@@ -240,7 +245,7 @@
                   </template>
                 </ElTableColumn>
                 
-                <ElTableColumn prop="level" label="等级" width="100">
+                <ElTableColumn prop="level" label="等级" min-width="80">
                   <template #default="{ row }">
                     <ElSelect
                       v-model="row.level"
@@ -258,7 +263,7 @@
                   </template>
                 </ElTableColumn>
                 
-                <ElTableColumn prop="certificateNumber" label="证书编号" width="150">
+                <ElTableColumn prop="certificateNumber" label="证书编号" min-width="140">
                   <template #default="{ row }">
                     <ElInput
                       v-model="row.certificateNumber"
@@ -268,7 +273,7 @@
                   </template>
                 </ElTableColumn>
                 
-                <ElTableColumn prop="issuingAuthority" label="发证机关" width="150">
+                <ElTableColumn prop="issuingAuthority" label="发证机关" min-width="140">
                   <template #default="{ row }">
                     <ElSelect
                       v-model="row.issuingAuthority"
@@ -286,7 +291,7 @@
                   </template>
                 </ElTableColumn>
                 
-                <ElTableColumn prop="validityDate" label="证书有效期" width="140">
+                <ElTableColumn prop="validityDate" label="证书有效期" min-width="130">
                   <template #default="{ row }">
                     <ElDatePicker
                       v-model="row.validityDate"
@@ -300,7 +305,7 @@
                   </template>
                 </ElTableColumn>
                 
-                <ElTableColumn label="操作" width="80" fixed="right">
+                <ElTableColumn label="操作" width="80" fixed="right" v-if="!isReadonly">
                   <template #default="{ $index }">
                     <ElButton
                       type="danger"
@@ -324,8 +329,105 @@
         <!-- 安全许可证标签页 -->
         <ElTabPane name="safety" label="安全许可证">
           <div class="safety-content">
-            <div class="empty-state">
-              <div class="empty-text">安全许可证管理功能开发中...</div>
+            <!-- 顶部操作区 -->
+            <div class="safety-header" v-if="!isReadonly">
+              <div class="header-left">
+                <ElButton type="primary" @click="handleAddItem('safety')">
+                  + 新增安全许可证
+                </ElButton>
+              </div>
+              <div class="header-right">
+                <ElInput
+                  v-model="safetyPermitSearchText"
+                  placeholder="请输入证书编号搜索"
+                  clearable
+                  style="width: 200px"
+                >
+                  <template #prefix>
+                    <ElIcon><Search /></ElIcon>
+                  </template>
+                </ElInput>
+              </div>
+            </div>
+            
+            <!-- 安全许可证列表 -->
+            <div class="safety-list" v-if="safetyPermitList.length > 0">
+              <ElTable
+                :data="safetyPermitList"
+                border
+                stripe
+                style="width: 100%"
+                class="safety-table"
+                table-layout="auto"
+              >
+                <ElTableColumn prop="certificateNumber" label="证书编号" min-width="200">
+                  <template #default="{ row }">
+                    <ElInput
+                      v-model="row.certificateNumber"
+                      placeholder="请输入证书编号"
+                      size="small"
+                      style="width: 100%"
+                    />
+                  </template>
+                </ElTableColumn>
+                
+                <ElTableColumn prop="issuingAuthority" label="发证机关" min-width="200">
+                  <template #default="{ row }">
+                    <ElSelect
+                      v-model="row.issuingAuthority"
+                      placeholder="请选择发证机关"
+                      size="small"
+                      style="width: 100%"
+                    >
+                      <ElOption
+                        v-for="option in safetyPermitConfig.issuingAuthorityOptions"
+                        :key="option.value"
+                        :label="option.label"
+                        :value="option.value"
+                      />
+                    </ElSelect>
+                  </template>
+                </ElTableColumn>
+                
+                <ElTableColumn prop="validityDate" label="有效期" min-width="140">
+                  <template #default="{ row }">
+                    <ElDatePicker
+                      v-model="row.validityDate"
+                      type="date"
+                      placeholder="有效期至"
+                      size="small"
+                      style="width: 100%"
+                      format="YYYY-MM-DD"
+                      value-format="YYYY-MM-DD"
+                    />
+                  </template>
+                </ElTableColumn>
+                
+                <ElTableColumn label="操作" width="80" fixed="right" v-if="!isReadonly">
+                  <template #default="{ $index }">
+                    <ElButton
+                      type="danger"
+                      size="small"
+                      @click="handleDeleteItem('safety', $index)"
+                    >
+                      删除
+                    </ElButton>
+                  </template>
+                </ElTableColumn>
+              </ElTable>
+            </div>
+            
+            <!-- 空状态 -->
+            <div v-else class="empty-state">
+              <div class="empty-text">暂无安全许可证信息</div>
+              <ElButton 
+                v-if="!isReadonly"
+                type="primary" 
+                @click="handleAddItem('safety')" 
+                style="margin-top: 16px"
+              >
+                + 新增安全许可证
+              </ElButton>
             </div>
           </div>
         </ElTabPane>
@@ -333,8 +435,105 @@
         <!-- 信用手册标签页 -->
         <ElTabPane name="credit" label="信用手册">
           <div class="credit-content">
-            <div class="empty-state">
-              <div class="empty-text">信用手册管理功能开发中...</div>
+            <!-- 顶部操作区 -->
+            <div class="credit-header" v-if="!isReadonly">
+              <div class="header-left">
+                <ElButton type="primary" @click="handleAddItem('credit')">
+                  + 新增信用手册
+                </ElButton>
+              </div>
+              <div class="header-right">
+                <ElInput
+                  v-model="creditManualSearchText"
+                  placeholder="请输入档案编号搜索"
+                  clearable
+                  style="width: 200px"
+                >
+                  <template #prefix>
+                    <ElIcon><Search /></ElIcon>
+                  </template>
+                </ElInput>
+              </div>
+            </div>
+            
+            <!-- 信用手册列表 -->
+            <div class="credit-list" v-if="creditManualList.length > 0">
+              <ElTable
+                :data="creditManualList"
+                border
+                stripe
+                style="width: 100%"
+                class="credit-table"
+                table-layout="auto"
+              >
+                <ElTableColumn prop="archiveNumber" label="档案编号" min-width="200">
+                  <template #default="{ row }">
+                    <ElInput
+                      v-model="row.archiveNumber"
+                      placeholder="请输入档案编号"
+                      size="small"
+                      style="width: 100%"
+                    />
+                  </template>
+                </ElTableColumn>
+                
+                <ElTableColumn prop="issuingAuthority" label="发证机关" min-width="200">
+                  <template #default="{ row }">
+                    <ElSelect
+                      v-model="row.issuingAuthority"
+                      placeholder="请选择发证机关"
+                      size="small"
+                      style="width: 100%"
+                    >
+                      <ElOption
+                        v-for="option in creditManualConfig.issuingAuthorityOptions"
+                        :key="option.value"
+                        :label="option.label"
+                        :value="option.value"
+                      />
+                    </ElSelect>
+                  </template>
+                </ElTableColumn>
+                
+                <ElTableColumn prop="validityDate" label="有效期" min-width="140">
+                  <template #default="{ row }">
+                    <ElDatePicker
+                      v-model="row.validityDate"
+                      type="date"
+                      placeholder="有效期至"
+                      size="small"
+                      style="width: 100%"
+                      format="YYYY-MM-DD"
+                      value-format="YYYY-MM-DD"
+                    />
+                  </template>
+                </ElTableColumn>
+                
+                <ElTableColumn label="操作" width="80" fixed="right" v-if="!isReadonly">
+                  <template #default="{ $index }">
+                    <ElButton
+                      type="danger"
+                      size="small"
+                      @click="handleDeleteItem('credit', $index)"
+                    >
+                      删除
+                    </ElButton>
+                  </template>
+                </ElTableColumn>
+              </ElTable>
+            </div>
+            
+            <!-- 空状态 -->
+            <div v-else class="empty-state">
+              <div class="empty-text">暂无信用手册信息</div>
+              <ElButton 
+                v-if="!isReadonly"
+                type="primary" 
+                @click="handleAddItem('credit')" 
+                style="margin-top: 16px"
+              >
+                + 新增信用手册
+              </ElButton>
             </div>
           </div>
         </ElTabPane>
@@ -342,8 +541,150 @@
         <!-- 企业人员标签页 -->
         <ElTabPane name="personnel" label="企业人员">
           <div class="personnel-content">
-            <div class="empty-state">
-              <div class="empty-text">企业人员管理功能开发中...</div>
+            <!-- 顶部操作区 -->
+            <div class="personnel-header" v-if="!isReadonly">
+              <div class="header-left">
+                <ElButton type="primary" @click="handleAddItem('personnel')">
+                  + 新增人员
+                </ElButton>
+              </div>
+              <div class="header-right">
+                <ElInput
+                  v-model="personnelSearchText"
+                  placeholder="请输入姓名或身份证号搜索"
+                  clearable
+                  style="width: 250px"
+                >
+                  <template #prefix>
+                    <ElIcon><Search /></ElIcon>
+                  </template>
+                </ElInput>
+              </div>
+            </div>
+            
+            <!-- 人员列表 -->
+            <div class="personnel-list" v-if="personnelList.length > 0">
+              <ElTable
+                :data="personnelList"
+                border
+                stripe
+                style="width: 100%"
+                class="personnel-table"
+                table-layout="auto"
+              >
+                <ElTableColumn prop="name" label="姓名" min-width="100">
+                  <template #default="{ row }">
+                    <ElInput
+                      v-model="row.name"
+                      placeholder="请输入姓名"
+                      size="small"
+                      style="width: 100%"
+                    />
+                  </template>
+                </ElTableColumn>
+                
+                <ElTableColumn prop="idNumber" label="身份证号" min-width="160">
+                  <template #default="{ row }">
+                    <ElInput
+                      v-model="row.idNumber"
+                      placeholder="请输入身份证号"
+                      size="small"
+                      style="width: 100%"
+                      @input="calculateAgeAndGender(row)"
+                    />
+                  </template>
+                </ElTableColumn>
+                
+                <ElTableColumn prop="birthDate" label="出生年月" min-width="100">
+                  <template #default="{ row }">
+                    <ElInput
+                      v-model="row.birthDate"
+                      placeholder="自动计算"
+                      size="small"
+                      readonly
+                      style="width: 100%"
+                    />
+                  </template>
+                </ElTableColumn>
+                
+                <ElTableColumn prop="gender" label="性别" min-width="60">
+                  <template #default="{ row }">
+                    <ElInput
+                      v-model="row.gender"
+                      placeholder="自动计算"
+                      size="small"
+                      readonly
+                      style="width: 100%"
+                    />
+                  </template>
+                </ElTableColumn>
+                
+                <ElTableColumn prop="age" label="年龄" min-width="60">
+                  <template #default="{ row }">
+                    <ElInput
+                      v-model="row.age"
+                      placeholder="自动计算"
+                      size="small"
+                      readonly
+                      style="width: 100%"
+                    />
+                  </template>
+                </ElTableColumn>
+                
+                <ElTableColumn prop="phone" label="手机号" min-width="120">
+                  <template #default="{ row }">
+                    <ElInput
+                      v-model="row.phone"
+                      placeholder="请输入手机号"
+                      size="small"
+                      style="width: 100%"
+                    />
+                  </template>
+                </ElTableColumn>
+                
+                <ElTableColumn prop="qualificationType" label="资质类型" min-width="160">
+                  <template #default="{ row }">
+                    <ElSelect
+                      v-model="row.qualificationType"
+                      placeholder="请选择资质类型"
+                      size="small"
+                      style="width: 100%"
+                    >
+                      <ElOption
+                        v-for="option in personnelConfig.qualificationTypeOptions"
+                        :key="option.value"
+                        :label="option.label"
+                        :value="option.value"
+                      />
+                    </ElSelect>
+                  </template>
+                </ElTableColumn>
+                
+                <ElTableColumn label="操作" width="80" fixed="right" v-if="!isReadonly">
+                  <template #default="{ $index }">
+                    <ElButton
+                      type="danger"
+                      size="small"
+                      @click="handleDeleteItem('personnel', $index)"
+                    >
+                      删除
+                    </ElButton>
+                  </template>
+                </ElTableColumn>
+              </ElTable>
+            </div>
+            
+            <!-- 空状态 -->
+            <div v-else class="empty-state">
+              <div class="empty-text">暂无人员信息</div>
+              <ElButton 
+                v-if="!isReadonly"
+                type="primary" 
+                @click="handleAddItem('personnel')" 
+                style="margin-top: 16px"
+              >
+                + 新增人员
+              </ElButton>
             </div>
           </div>
         </ElTabPane>
@@ -383,8 +724,10 @@ import {
   ElButton,
   ElTable,
   ElTableColumn,
-  ElDatePicker
+  ElDatePicker,
+  ElIcon
 } from 'element-plus'
+import { Search } from '@element-plus/icons-vue'
 import {
   tabsConfig,
   basicFormConfig,
@@ -392,6 +735,9 @@ import {
   customerTypeOptions,
   customerAttributionOptions,
   qualificationConfig,
+  safetyPermitConfig,
+  creditManualConfig,
+  personnelConfig,
   dialogButtonsConfig
 } from '../config/dialog.config'
 import { useEnterpriseDialog } from '../hooks/useEnterpriseDialog'
@@ -416,6 +762,10 @@ const {
   personnelList,
   currentEnterpriseId,
   
+  // 计算属性
+  dialogTitle,
+  isReadonly,
+  
   // 方法
   openDialog,
   closeDialog,
@@ -432,14 +782,17 @@ const {
   getCategoryOptions,
   handleQualificationTypeChange,
   handleQualificationSeriesChange
-} = useEnterpriseDialog()
-
-// 计算属性
-const dialogTitle = computed(() => {
-  return dialogMode.value === 'add' ? '新增企业' : '编辑企业'
-})
+} = useEnterpriseDialog(emit)
 
 const currentTabButtons = computed(() => {
+  // 在查看模式下只显示关闭按钮
+  if (isReadonly.value) {
+    return [{
+      label: '关闭',
+      type: 'default' as const,
+      action: 'cancel'
+    }]
+  }
   return dialogButtonsConfig.filter(btn => 
     btn.show.includes(activeTab.value)
   )
@@ -662,6 +1015,7 @@ defineExpose({
         .qualification-table {
           border-radius: 6px;
           overflow: hidden;
+          width: 100% !important;
           
           :deep(.el-table__header) {
             th {
@@ -735,17 +1089,126 @@ defineExpose({
       }
     }
     
-    // 其他标签页样式
-    .safety-content,
-    .credit-content,
-    .personnel-content {
+    // 安全许可证管理样式
+    .safety-content {
+      .safety-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+        padding: 12px 16px;
+        background-color: #f8f9fa;
+        border-radius: 4px;
+        
+        .header-left {
+          display: flex;
+          align-items: center;
+        }
+        
+        .header-right {
+          display: flex;
+          align-items: center;
+        }
+      }
+      
+      .safety-table {
+        width: 100% !important;
+        // 表格样式
+        :deep(.el-table__cell) {
+          padding: 8px;
+        }
+      }
+      
       .empty-state {
         text-align: center;
         padding: 60px 20px;
-        color: #999;
+        color: #909399;
         
         .empty-text {
-          font-size: 16px;
+          font-size: 14px;
+          margin-bottom: 16px;
+        }
+      }
+    }
+    
+    // 信用手册管理样式
+    .credit-content {
+      .credit-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+        padding: 12px 16px;
+        background-color: #f8f9fa;
+        border-radius: 4px;
+        
+        .header-left {
+          display: flex;
+          align-items: center;
+        }
+        
+        .header-right {
+          display: flex;
+          align-items: center;
+        }
+      }
+      
+      .credit-table {
+        width: 100% !important;
+        :deep(.el-table__cell) {
+          padding: 8px;
+        }
+      }
+      
+      .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: #909399;
+        
+        .empty-text {
+          font-size: 14px;
+          margin-bottom: 16px;
+        }
+      }
+    }
+    
+    // 企业人员管理样式
+    .personnel-content {
+      .personnel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+        padding: 12px 16px;
+        background-color: #f8f9fa;
+        border-radius: 4px;
+        
+        .header-left {
+          display: flex;
+          align-items: center;
+        }
+        
+        .header-right {
+          display: flex;
+          align-items: center;
+        }
+      }
+      
+      .personnel-table {
+        width: 100% !important;
+        :deep(.el-table__cell) {
+          padding: 8px;
+        }
+      }
+      
+      .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: #909399;
+        
+        .empty-text {
+          font-size: 14px;
+          margin-bottom: 16px;
         }
       }
     }
